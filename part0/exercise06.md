@@ -1,2 +1,3 @@
-::: mermaid
-:::
+```mermaid
+
+```

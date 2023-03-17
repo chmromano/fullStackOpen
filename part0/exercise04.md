@@ -10,6 +10,8 @@ participant server
     server-->>browser: URL redirect to location /notes
     deactivate server
 
+    Note right of browser: The server tells the browser to go to another page
+
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
     server-->>browser: HTML document
