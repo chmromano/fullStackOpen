@@ -4,16 +4,36 @@ sequenceDiagram
 participant browser
 participant server
 
-    Note right of browser: The browser interrupts the default behaviour of form submit
-
-    Note right of browser: The browser creates a new note object
-
-    Note right of browser: The browser saves the new note to a local array of notes
-
-    Note right of browser: The browser redraws the notes
-
-    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
-
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
     Note left of server: The server will save the sent note
+    server-->>browser: URL redirect to location /notes
+    deactivate server
+
+    Note right of browser: The server tells the browser to go to another page
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: the JavaScript file
+    deactivate server
+
+    Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+    deactivate server
+
+    Note right of browser: The browser executes the callback function that renders the notes
 
 ```
