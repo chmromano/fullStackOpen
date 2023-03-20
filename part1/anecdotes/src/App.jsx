@@ -19,9 +19,19 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState(new Uint8Array(8));
 
-  const setRandomInt = (max) => () => {
-    const number = Math.floor(Math.random() * max);
+  const handleVote = () => {
+    const copy = [...points];
+    console.log("Before:", copy);
+    copy[selected] += 1;
+    console.log("After:", copy);
+    setPoints(copy);
+  };
+
+  const handleNextAnecdote = () => {
+    // range from 0 to 8
+    const number = Math.floor(Math.random() * 8);
     console.log(number);
     setSelected(number);
   };
@@ -29,7 +39,8 @@ const App = () => {
   return (
     <>
       <div>{anecdotes[selected]}</div>
-      <Button handleClick={setRandomInt(8)} text="next anecdote" />
+      <Button handleClick={handleVote} text="vote" />
+      <Button handleClick={handleNextAnecdote} text="next anecdote" />
     </>
   );
 };
