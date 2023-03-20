@@ -13,3 +13,9 @@
 - [x] courseinfo
 - [x] unicafe
 - [x] anecdotes
+
+### Part 2
+
+- [ ]
+- [ ]
+- [ ]
