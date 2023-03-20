@@ -12,4 +12,4 @@
 
 - [x] courseinfo
 - [x] unicafe
-- [ ]
+- [x] anecdotes
