@@ -10,6 +10,6 @@
 
 ### Part 1
 
-- [ ] wip
-- [ ] wip
-- [ ] wip
+- [ ] courseinfo
+- [ ] unicafe
+- [ ]
