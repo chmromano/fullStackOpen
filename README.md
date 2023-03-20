@@ -10,6 +10,6 @@
 
 ### Part 1
 
-- [ ] courseinfo
-- [ ] unicafe
+- [x] courseinfo
+- [x] unicafe
 - [ ]
