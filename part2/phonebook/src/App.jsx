@@ -9,13 +9,23 @@ const App = () => {
     const newPerson = {
       name: newName,
     };
-    setPersons(persons.concat(newPerson));
-    setNewName("");
+
+    if (nameAlreadyInPhonebook(newName)) {
+      alert(`${newName} is already in the phonebook`);
+    } else {
+      setPersons(persons.concat(newPerson));
+      setNewName("");
+    }
   };
 
   const handleNameChange = (event) => {
     console.log(event.target.value);
     setNewName(event.target.value);
+  };
+
+  const nameAlreadyInPhonebook = (newName) => {
+    const searchResult = persons.find((person) => person.name === newName);
+    return !(searchResult === undefined);
   };
 
   return (
