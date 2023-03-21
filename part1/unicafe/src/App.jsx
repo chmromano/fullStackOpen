@@ -43,7 +43,7 @@ const Statistics = (props) => {
             />
             <StatisticLine
               text="positive"
-              value={(100 * (good / (good + neutral + bad))).toString() + "%"}
+              value={`${100 * (good / (good + neutral + bad))}%`}
             />
           </tbody>
         </table>
