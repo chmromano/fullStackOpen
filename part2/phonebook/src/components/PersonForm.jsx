@@ -1,3 +1,5 @@
+import personService from "./../services/persons";
+
 const PersonForm = (props) => {
   console.log(props);
   const { persons, setPersons, newName, setNewName, newNumber, setNewNumber } =
@@ -16,9 +18,14 @@ const PersonForm = (props) => {
     } else if (numberAlreadyInPhonebook(newNumber)) {
       alert(`${newNumber} is already in the phonebook`);
     } else {
-      setPersons(persons.concat(newPerson));
-      setNewName("");
-      setNewNumber("");
+      personService
+        .create(newPerson)
+        .then((returnedPerson) => {
+          setPersons(persons.concat(returnedPerson));
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch((error) => console.log("promise failed"));
     }
   };
 
