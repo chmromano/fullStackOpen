@@ -2,7 +2,8 @@ import personService from "../services/persons";
 
 const Person = (props) => {
   console.log(props);
-  const { person, persons, setPersons, setSuccessMessage } = props;
+  const { person, persons, setPersons, setSuccessMessage, setErrorMessage } =
+    props;
 
   const handleDelete = (id) => {
     if (
@@ -14,12 +15,24 @@ const Person = (props) => {
         .deletePerson(id)
         .then(() => {
           setPersons(persons.filter((person) => person.id !== id));
+
           setSuccessMessage(`${person.name} was deleted from the phonebook`);
           setTimeout(() => {
             setSuccessMessage(null);
           }, 5000);
         })
-        .catch((error) => console.log("Promise failed"));
+        .catch((error) => {
+          console.log("Promise failed");
+
+          setErrorMessage(
+            `Information of ${person.name} has already been removed from the server`
+          );
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
+
+          setPersons(persons.filter((person) => person.id !== id));
+        });
     }
   };
 
@@ -33,7 +46,8 @@ const Person = (props) => {
 
 const Persons = (props) => {
   console.log(props);
-  const { persons, setPersons, filter, setSuccessMessage } = props;
+  const { persons, setPersons, filter, setSuccessMessage, setErrorMessage } =
+    props;
 
   const phonebook = persons.filter((person) =>
     person.name.toLowerCase().includes(filter.toLowerCase())
@@ -48,6 +62,7 @@ const Persons = (props) => {
           persons={persons}
           setPersons={setPersons}
           setSuccessMessage={setSuccessMessage}
+          setErrorMessage={setErrorMessage}
         />
       ))}
     </>

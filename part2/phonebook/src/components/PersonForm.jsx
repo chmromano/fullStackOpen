@@ -28,6 +28,7 @@ const PersonForm = (props) => {
           setPersons(persons.concat(createdPerson));
           setNewName("");
           setNewNumber("");
+
           setSuccessMessage(`${newPerson.name} was added to the phonebook`);
           setTimeout(() => {
             setSuccessMessage(null);
@@ -52,6 +53,7 @@ const PersonForm = (props) => {
             );
             setNewName("");
             setNewNumber("");
+
             setSuccessMessage(`${newPerson.name}'s number was updated`);
             setTimeout(() => {
               setSuccessMessage(null);
