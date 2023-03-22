@@ -10,22 +10,40 @@ const PersonForm = (props) => {
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
     };
 
-    if (nameAlreadyInPhonebook(newName)) {
-      alert(`${newName} is already in the phonebook`);
-    } else if (numberAlreadyInPhonebook(newNumber)) {
-      alert(`${newNumber} is already in the phonebook`);
-    } else {
+    const searchResult = persons.find((person) => person.name === newName);
+
+    if (searchResult === undefined) {
       personService
         .createPerson(newPerson)
-        .then((returnedPerson) => {
-          setPersons(persons.concat(returnedPerson));
+        .then((createdPerson) => {
+          setPersons(persons.concat(createdPerson));
           setNewName("");
           setNewNumber("");
         })
         .catch((error) => console.log("promise failed"));
+    } else {
+      const id = searchResult.id;
+
+      if (
+        window.confirm(
+          `${newName} is already in the phonebook. Do you want to replace his old phone number with a new one?`
+        )
+      ) {
+        personService
+          .updatePerson(id, newPerson)
+          .then((updatedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== id ? person : updatedPerson
+              )
+            );
+            setNewName("");
+            setNewNumber("");
+          })
+          .catch((error) => console.log("promise failed"));
+      }
     }
   };
 
@@ -39,15 +57,6 @@ const PersonForm = (props) => {
     setNewNumber(event.target.value);
   };
 
-  const nameAlreadyInPhonebook = (newName) => {
-    const searchResult = persons.find((person) => person.name === newName);
-    return !(searchResult === undefined);
-  };
-
-  const numberAlreadyInPhonebook = (newNumber) => {
-    const searchResult = persons.find((person) => person.number === newNumber);
-    return !(searchResult === undefined);
-  };
   return (
     <form onSubmit={addPerson}>
       <div>

@@ -14,7 +14,9 @@ const App = () => {
 
   useEffect(() => {
     console.log("effect");
-    personService.getAll().then((initialPersons) => setPersons(initialPersons));
+    personService
+      .getAllPersons()
+      .then((initialPersons) => setPersons(initialPersons));
   }, []);
   console.log("render", persons.length, "persons");
 
