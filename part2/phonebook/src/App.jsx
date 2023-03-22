@@ -18,10 +18,6 @@ const App = () => {
   }, []);
   console.log("render", persons.length, "persons");
 
-  const filteredPhonebook = persons.filter((person) =>
-    person.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
   return (
     <>
       <h2>Phonebook</h2>
@@ -36,7 +32,7 @@ const App = () => {
         setNewNumber={setNewNumber}
       />
       <h3>Numbers</h3>
-      <Persons phonebook={filteredPhonebook} />
+      <Persons persons={persons} setPersons={setPersons} filter={filter} />
     </>
   );
 };

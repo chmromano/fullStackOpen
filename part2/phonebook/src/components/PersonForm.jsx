@@ -1,4 +1,4 @@
-import personService from "./../services/persons";
+import personService from "../services/persons";
 
 const PersonForm = (props) => {
   console.log(props);
@@ -19,7 +19,7 @@ const PersonForm = (props) => {
       alert(`${newNumber} is already in the phonebook`);
     } else {
       personService
-        .create(newPerson)
+        .createPerson(newPerson)
         .then((returnedPerson) => {
           setPersons(persons.concat(returnedPerson));
           setNewName("");
