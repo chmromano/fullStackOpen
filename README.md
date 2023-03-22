@@ -16,6 +16,6 @@
 
 ### Part 2
 
-- [ ]
-- [ ]
-- [ ]
+- [x] courseinfo
+- [x] phonebook
+- [ ] dataforcountries
