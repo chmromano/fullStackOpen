@@ -2,8 +2,15 @@ import personService from "../services/persons";
 
 const PersonForm = (props) => {
   console.log(props);
-  const { persons, setPersons, newName, setNewName, newNumber, setNewNumber } =
-    props;
+  const {
+    persons,
+    setPersons,
+    newName,
+    setNewName,
+    newNumber,
+    setNewNumber,
+    setSuccessMessage,
+  } = props;
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -21,6 +28,10 @@ const PersonForm = (props) => {
           setPersons(persons.concat(createdPerson));
           setNewName("");
           setNewNumber("");
+          setSuccessMessage(`${newPerson.name} was added to the phonebook`);
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 5000);
         })
         .catch((error) => console.log("promise failed"));
     } else {
@@ -41,6 +52,10 @@ const PersonForm = (props) => {
             );
             setNewName("");
             setNewNumber("");
+            setSuccessMessage(`${newPerson.name}'s number was updated`);
+            setTimeout(() => {
+              setSuccessMessage(null);
+            }, 5000);
           })
           .catch((error) => console.log("promise failed"));
       }

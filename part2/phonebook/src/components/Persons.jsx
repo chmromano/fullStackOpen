@@ -2,7 +2,7 @@ import personService from "../services/persons";
 
 const Person = (props) => {
   console.log(props);
-  const { person, persons, setPersons } = props;
+  const { person, persons, setPersons, setSuccessMessage } = props;
 
   const handleDelete = (id) => {
     if (
@@ -12,7 +12,13 @@ const Person = (props) => {
     ) {
       personService
         .deletePerson(id)
-        .then(() => setPersons(persons.filter((person) => person.id !== id)))
+        .then(() => {
+          setPersons(persons.filter((person) => person.id !== id));
+          setSuccessMessage(`${person.name} was deleted from the phonebook`);
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 5000);
+        })
         .catch((error) => console.log("Promise failed"));
     }
   };
@@ -27,7 +33,7 @@ const Person = (props) => {
 
 const Persons = (props) => {
   console.log(props);
-  const { persons, setPersons, filter } = props;
+  const { persons, setPersons, filter, setSuccessMessage } = props;
 
   const phonebook = persons.filter((person) =>
     person.name.toLowerCase().includes(filter.toLowerCase())
@@ -41,6 +47,7 @@ const Persons = (props) => {
           person={person}
           persons={persons}
           setPersons={setPersons}
+          setSuccessMessage={setSuccessMessage}
         />
       ))}
     </>
