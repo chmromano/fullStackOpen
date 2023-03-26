@@ -39,7 +39,7 @@ const Total = (props) => {
 
   const sumWithReduce = parts.reduce(
     (sum, next) => sum + next.exercises,
-    0, // The initial value of sum for the reduce function
+    0 // The initial value of sum for the reduce function
   );
 
   return (

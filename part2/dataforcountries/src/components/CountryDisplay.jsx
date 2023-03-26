@@ -9,7 +9,7 @@ const CountryDisplay = ({ countries, filter }) => {
   const [country, setCountry] = useState({ name: "" });
 
   const filteredCountries = countries.filter((country) =>
-    country.name.toLowerCase().includes(filter.toLowerCase()),
+    country.name.toLowerCase().includes(filter.toLowerCase())
   );
 
   const listLength = filteredCountries.length;

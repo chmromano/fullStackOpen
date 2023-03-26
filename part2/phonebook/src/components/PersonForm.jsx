@@ -42,7 +42,7 @@ const PersonForm = (props) => {
 
       if (
         window.confirm(
-          `${newName} is already in the phonebook. Do you want to replace his old phone number with a new one?`,
+          `${newName} is already in the phonebook. Do you want to replace his old phone number with a new one?`
         )
       ) {
         personService
@@ -50,8 +50,8 @@ const PersonForm = (props) => {
           .then((updatedPerson) => {
             setPersons(
               persons.map((person) =>
-                person.id !== id ? person : updatedPerson,
-              ),
+                person.id !== id ? person : updatedPerson
+              )
             );
             setNewName("");
             setNewNumber("");
