@@ -15,6 +15,8 @@ const Capital = ({ capitals }) => {
 };
 
 const Country = ({ country }) => {
+  if (country.name === "") return null;
+
   // Converting the country's languages object values into an array
   const languages = Object.values(country.languages);
 

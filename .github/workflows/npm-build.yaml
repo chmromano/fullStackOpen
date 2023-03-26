@@ -2,6 +2,9 @@ name: Build fullStackOpen exercises
 
 on: [push, pull_request]
 
+permissions:
+    contents: read
+
 jobs:
   build:
     name: Build exercise ${{ matrix.directories }}
@@ -25,12 +28,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - name: Install modules for ${{ matrix.directories }}
+      - name: Install dependencies for ${{ matrix.directories }}
         run: npm ci
         working-directory: ${{ matrix.directories }}
       - name: Build ${{ matrix.directories }}
         run: npm run build --if-present
         working-directory: ${{ matrix.directories }}
-      - name: Run ESLint
+      - name: Run ESLint on ${{ matrix.directories }}
         run: ./node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx
         working-directory: ${{ matrix.directories }}
