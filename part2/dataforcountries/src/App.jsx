@@ -23,7 +23,7 @@ const App = () => {
             languages: country.languages,
             flag: country.flags.svg,
           };
-        }),
+        })
       )
       .then((countryArray) => {
         setCountries(countryArray);
