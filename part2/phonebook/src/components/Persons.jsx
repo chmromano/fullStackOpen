@@ -1,3 +1,5 @@
+import React from "react";
+
 import personService from "../services/persons";
 
 const Person = (props) => {
@@ -8,7 +10,7 @@ const Person = (props) => {
   const handleDelete = (id) => {
     if (
       window.confirm(
-        `Do you really want to delete ${person.name} from the phonebook?`
+        `Do you really want to delete ${person.name} from the phonebook?`,
       )
     ) {
       personService
@@ -22,10 +24,10 @@ const Person = (props) => {
           }, 5000);
         })
         .catch((error) => {
-          console.log("Promise failed");
+          console.log("Promise failed:", error);
 
           setErrorMessage(
-            `Information of ${person.name} has already been removed from the server`
+            `Information of ${person.name} has already been removed from the server`,
           );
           setTimeout(() => {
             setErrorMessage(null);
@@ -50,7 +52,7 @@ const Persons = (props) => {
     props;
 
   const phonebook = persons.filter((person) =>
-    person.name.toLowerCase().includes(filter.toLowerCase())
+    person.name.toLowerCase().includes(filter.toLowerCase()),
   );
 
   return (

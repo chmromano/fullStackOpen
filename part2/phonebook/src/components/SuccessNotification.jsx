@@ -1,3 +1,5 @@
+import React from "react";
+
 const SuccessNotification = (props) => {
   console.log(props);
   const { message } = props;

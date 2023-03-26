@@ -1,3 +1,5 @@
+import React from "react";
+
 const Name = (props) => {
   console.log(props);
   const { text } = props;
@@ -37,7 +39,7 @@ const Total = (props) => {
 
   const sumWithReduce = parts.reduce(
     (sum, next) => sum + next.exercises,
-    0 // The initial value of sum for the reduce function
+    0, // The initial value of sum for the reduce function
   );
 
   return (

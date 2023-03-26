@@ -1,3 +1,5 @@
+import React from "react";
+
 import personService from "../services/persons";
 
 const PersonForm = (props) => {
@@ -34,13 +36,13 @@ const PersonForm = (props) => {
             setSuccessMessage(null);
           }, 5000);
         })
-        .catch((error) => console.log("promise failed"));
+        .catch((error) => console.log("Promise failed:", error));
     } else {
       const id = searchResult.id;
 
       if (
         window.confirm(
-          `${newName} is already in the phonebook. Do you want to replace his old phone number with a new one?`
+          `${newName} is already in the phonebook. Do you want to replace his old phone number with a new one?`,
         )
       ) {
         personService
@@ -48,8 +50,8 @@ const PersonForm = (props) => {
           .then((updatedPerson) => {
             setPersons(
               persons.map((person) =>
-                person.id !== id ? person : updatedPerson
-              )
+                person.id !== id ? person : updatedPerson,
+              ),
             );
             setNewName("");
             setNewNumber("");
@@ -59,7 +61,7 @@ const PersonForm = (props) => {
               setSuccessMessage(null);
             }, 5000);
           })
-          .catch((error) => console.log("promise failed"));
+          .catch((error) => console.log("Promise failed:", error));
       }
     }
   };
