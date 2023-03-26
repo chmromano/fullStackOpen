@@ -3,7 +3,7 @@ name: Build fullStackOpen exercises
 on: [push, pull_request]
 
 permissions:
-    contents: read
+  contents: read
 
 jobs:
   build:
@@ -27,6 +27,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - uses: actions/setup-node@v3
       - name: Install dependencies for ${{ matrix.directories }}
         run: npm ci

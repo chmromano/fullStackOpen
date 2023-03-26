@@ -37,7 +37,6 @@ const CountryDisplay = ({ countries, filter }) => {
           ? "No countries found"
           : ""}
       </div>
-      <Country country={country} />
     </>
   );
 };
