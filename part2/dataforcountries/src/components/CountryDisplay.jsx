@@ -12,14 +12,10 @@ const CountryDisplay = ({ countries, filter }) => {
 
   const listLength = filteredCountries.length;
 
-  if (listLength === 1 && filteredCountries[0].name !== country.name)
-    setCountry(filteredCountries[0]);
-
-  if (listLength === 1) {
-    return <Country country={country} />;
-  }
-
   if (listLength <= 10 && listLength !== 0) {
+    if (listLength === 1 && filteredCountries[0].name !== country.name)
+      setCountry(filteredCountries[0]);
+
     return (
       <>
         <CountryList countries={filteredCountries} setCountry={setCountry} />

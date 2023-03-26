@@ -18,4 +18,4 @@
 
 - [x] courseinfo
 - [x] phonebook
-- [ ] dataforcountries
+- [x] dataforcountries

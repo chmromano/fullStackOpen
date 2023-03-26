@@ -1,12 +1,14 @@
-const Capital = ({ capitals }) => {
-  if (capitals.length === 1) return <div>Capital: {capitals[0]}</div>;
+import Weather from "./Weather";
+
+const Capital = ({ capital }) => {
+  if (capital.length === 1) return <div>Capital: {capital[0]}</div>;
 
   // Handle countries with more than 1 capital
   return (
     <>
-      <div>Capitals:</div>
+      <div>capitals:</div>
       <ul>
-        {capitals.map((capital) => (
+        {capital.map((capital) => (
           <li key={capital}>{capital}</li>
         ))}
       </ul>
@@ -23,7 +25,7 @@ const Country = ({ country }) => {
   return (
     <>
       <h1>{country.name}</h1>
-      <Capital capitals={country.capital} />
+      <Capital capital={country.capital} />
       <div>Area: {country.area}</div>
       <h2>Languages</h2>
       <ul>
@@ -32,6 +34,9 @@ const Country = ({ country }) => {
         ))}
       </ul>
       <img src={country.flag} alt={`Flag of ${country.name}`} height="150" />
+      {country.capital.map((capital) => (
+        <Weather key={capital} city={capital} />
+      ))}
     </>
   );
 };

@@ -8,6 +8,8 @@ const CountryListItem = ({ country, setCountry }) => {
 };
 
 const CountryList = ({ countries, setCountry }) => {
+  if (countries.length === 1) return null;
+
   return (
     <>
       {countries.map((country) => (
