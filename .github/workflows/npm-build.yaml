@@ -1,0 +1,39 @@
+name: Build fullStackOpen exercises
+
+on: [push, pull_request]
+
+permissions:
+    contents: read
+
+jobs:
+  build:
+    name: Build exercise ${{ matrix.directories }}
+
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        {
+          directories:
+            [
+              "part1/anecdotes",
+              "part1/courseinfo",
+              "part1/unicafe",
+              "part2/courseinfo",
+              "part2/dataforcountries",
+              "part2/phonebook",
+            ],
+        }
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Install dependencies for ${{ matrix.directories }}
+        run: npm ci
+        working-directory: ${{ matrix.directories }}
+      - name: Build ${{ matrix.directories }}
+        run: npm run build --if-present
+        working-directory: ${{ matrix.directories }}
+      - name: Run ESLint on ${{ matrix.directories }}
+        run: ./node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx
+        working-directory: ${{ matrix.directories }}
