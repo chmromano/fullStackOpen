@@ -39,6 +39,7 @@ const App = () => {
         newNumber={newNumber}
         setNewNumber={setNewNumber}
         setSuccessMessage={setSuccessMessage}
+        setErrorMessage={setErrorMessage}
       />
       <h3>Numbers</h3>
       <Persons
