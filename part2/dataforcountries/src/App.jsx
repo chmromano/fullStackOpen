@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import countryService from "./services/countries";
 
@@ -23,7 +22,7 @@ const App = () => {
             languages: country.languages,
             flag: country.flags.svg,
           };
-        }),
+        })
       )
       .then((countryArray) => {
         setCountries(countryArray);

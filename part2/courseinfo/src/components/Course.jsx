@@ -1,3 +1,5 @@
+import React from "react";
+
 const Name = (props) => {
   console.log(props);
   const { text } = props;

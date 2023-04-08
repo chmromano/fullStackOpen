@@ -1,3 +1,5 @@
+import React from "react";
+
 import personService from "../services/persons";
 
 const PersonForm = (props) => {
@@ -10,6 +12,7 @@ const PersonForm = (props) => {
     newNumber,
     setNewNumber,
     setSuccessMessage,
+    setErrorMessage,
   } = props;
 
   const addPerson = (event) => {
@@ -34,7 +37,13 @@ const PersonForm = (props) => {
             setSuccessMessage(null);
           }, 5000);
         })
-        .catch((error) => console.log("promise failed"));
+        .catch((error) => {
+          setErrorMessage(error.response.data.error);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
+          console.log("Promise failed:", error);
+        });
     } else {
       const id = searchResult.id;
 
@@ -59,7 +68,13 @@ const PersonForm = (props) => {
               setSuccessMessage(null);
             }, 5000);
           })
-          .catch((error) => console.log("promise failed"));
+          .catch((error) => {
+            setErrorMessage(error.response.data.error);
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
+            console.log("Promise failed:", error);
+          });
       }
     }
   };

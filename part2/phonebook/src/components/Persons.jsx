@@ -1,3 +1,5 @@
+import React from "react";
+
 import personService from "../services/persons";
 
 const Person = (props) => {
@@ -22,7 +24,7 @@ const Person = (props) => {
           }, 5000);
         })
         .catch((error) => {
-          console.log("Promise failed");
+          console.log("Promise failed:", error);
 
           setErrorMessage(
             `Information of ${person.name} has already been removed from the server`

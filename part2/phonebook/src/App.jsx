@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
@@ -39,6 +39,7 @@ const App = () => {
         newNumber={newNumber}
         setNewNumber={setNewNumber}
         setSuccessMessage={setSuccessMessage}
+        setErrorMessage={setErrorMessage}
       />
       <h3>Numbers</h3>
       <Persons

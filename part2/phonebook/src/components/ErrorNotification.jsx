@@ -1,3 +1,5 @@
+import React from "react";
+
 const ErrorNotification = (props) => {
   console.log(props);
   const { message } = props;

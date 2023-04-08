@@ -1,3 +1,5 @@
+import React from "react";
+
 import { useState } from "react";
 
 import CountryList from "./CountryList";
@@ -7,7 +9,7 @@ const CountryDisplay = ({ countries, filter }) => {
   const [country, setCountry] = useState({ name: "" });
 
   const filteredCountries = countries.filter((country) =>
-    country.name.toLowerCase().includes(filter.toLowerCase()),
+    country.name.toLowerCase().includes(filter.toLowerCase())
   );
 
   const listLength = filteredCountries.length;
@@ -37,7 +39,6 @@ const CountryDisplay = ({ countries, filter }) => {
           ? "No countries found"
           : ""}
       </div>
-      <Country country={country} />
     </>
   );
 };
