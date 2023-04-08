@@ -19,3 +19,9 @@
 - [x] courseinfo
 - [x] phonebook
 - [x] dataforcountries
+
+### Part 3 ([separate repository](https://github.com/chmromano/fullStackOpen-Part3))
+
+- [x] phonebookbackend
+- [x] phonebookdatabase
+- [x] lintconfiguration
