@@ -1,3 +1,5 @@
+const collection = require("lodash/collection");
+
 /* eslint-disable-next-line no-unused-vars */
 const dummy = (blogs) => {
   return 1;
@@ -19,8 +21,20 @@ const favoriteBlog = (blogs) => {
   return favourite;
 };
 
+const mostBlogs = (blogs) => {
+  const countByAuthor = collection.countBy(blogs, "author");
+  const objectToArray = Object.entries(countByAuthor);
+  const result = objectToArray.reduce((previous, current) => {
+    return previous[1] > current[1]
+      ? { author: previous[0], blogs: previous[1] }
+      : { author: current[0], blogs: current[1] };
+  }, {});
+  return result;
+};
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
+  mostBlogs,
 };

@@ -91,24 +91,57 @@ describe("total likes", () => {
 describe("favourite blog", () => {
   test("of empty list return empty object", () => {
     const result = listHelper.favoriteBlog(listWithNoBlogs);
+
     expect(result).toEqual({});
   });
 
   test("of 1 blog returns that blog", () => {
     const result = listHelper.favoriteBlog(listWithOneBlog);
-    expect(result).toEqual({
+    const expected = {
       title: "Go To Statement Considered Harmful",
       author: "Edsger W. Dijkstra",
       likes: 5,
-    });
+    };
+
+    expect(result).toEqual(expected);
   });
 
   test("of multiple blogs returns last blog with most likes", () => {
     const result = listHelper.favoriteBlog(listWithMultipleBlogs);
-    expect(result).toEqual({
+    const expected = {
       title: "TDD harms architecture",
       author: "Robert C. Martin",
       likes: 12,
-    });
+    };
+
+    expect(result).toEqual(expected);
+  });
+});
+
+describe("most blogs", () => {
+  test("of empty list return empty object", () => {
+    const result = listHelper.mostBlogs(listWithNoBlogs);
+
+    expect(result).toEqual({});
+  });
+
+  test("of 1 blog returns that author", () => {
+    const result = listHelper.mostBlogs(listWithOneBlog);
+    const expected = {
+      author: "Edsger W. Dijkstra",
+      blogs: 1,
+    };
+
+    expect(result).toEqual(expected);
+  });
+
+  test("of multiple blogs returns author with most blogs", () => {
+    const result = listHelper.mostBlogs(listWithMultipleBlogs);
+    const expected = {
+      author: "Robert C. Martin",
+      blogs: 3,
+    };
+
+    expect(result).toEqual(expected);
   });
 });
