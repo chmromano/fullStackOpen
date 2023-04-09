@@ -20,8 +20,12 @@
 - [x] phonebook
 - [x] dataforcountries
 
-### Part 3 ([separate repository](https://github.com/chmromano/fullStackOpen-Part3))
+### Part 3 (submodule, [separate repository](https://github.com/chmromano/fullStackOpen-Part3))
 
 - [x] phonebookbackend
 - [x] phonebookdatabase
 - [x] lintconfiguration
+
+### Part 4
+
+- [ ] bloglist
