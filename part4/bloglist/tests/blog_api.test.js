@@ -34,7 +34,7 @@ test("blogs have the 'id' propery", async () => {
 });
 
 test("a blog can be added to the database", async () => {
-  const newBlog = {
+  const postedBlog = {
     title: "Test blog",
     author: "Test Testerson",
     url: "http://www.testblog.com/this-is-a-test-blog",
@@ -43,14 +43,41 @@ test("a blog can be added to the database", async () => {
 
   await api
     .post("/api/blogs")
-    .send(newBlog)
+    .send(postedBlog)
     .expect(201)
     .expect("Content-Type", /application\/json/);
 
   const blogsAtEnd = await testHelper.blogsInDb();
   expect(blogsAtEnd).toHaveLength(testHelper.listWithMultipleBlogs.length + 1);
   expect(blogsAtEnd).toEqual(
-    expect.arrayContaining([expect.objectContaining(newBlog)])
+    expect.arrayContaining([expect.objectContaining(postedBlog)])
+  );
+});
+
+test("if likes are missing default to 0", async () => {
+  const postedBlog = {
+    title: "Test blog",
+    author: "Test Testerson",
+    url: "http://www.testblog.com/this-is-a-test-blog",
+  };
+
+  const expectedBlog = {
+    title: "Test blog",
+    author: "Test Testerson",
+    url: "http://www.testblog.com/this-is-a-test-blog",
+    likes: 0,
+  };
+
+  await api
+    .post("/api/blogs")
+    .send(postedBlog)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  const blogsAtEnd = await testHelper.blogsInDb();
+  expect(blogsAtEnd).toHaveLength(testHelper.listWithMultipleBlogs.length + 1);
+  expect(blogsAtEnd).toEqual(
+    expect.arrayContaining([expect.objectContaining(expectedBlog)])
   );
 });
 
