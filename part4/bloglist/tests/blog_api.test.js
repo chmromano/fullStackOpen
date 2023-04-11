@@ -12,7 +12,7 @@ beforeEach(async () => {
   await Blog.insertMany(testHelper.listWithMultipleBlogs);
 });
 
-test("blogs are returned as json", async () => {
+test("all blogs are returned as json", async () => {
   await api
     .get("/api/blogs")
     .expect(200)
@@ -31,6 +31,27 @@ test("blogs have the 'id' propery", async () => {
   const blogList = response.body;
 
   blogList.forEach((blog) => expect(blog.id).toBeDefined());
+});
+
+test("a blog can be added to the database", async () => {
+  const newBlog = {
+    title: "Test blog",
+    author: "Test Testerson",
+    url: "http://www.testblog.com/this-is-a-test-blog",
+    likes: 3,
+  };
+
+  await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  const blogsAtEnd = await testHelper.blogsInDb();
+  expect(blogsAtEnd).toHaveLength(testHelper.listWithMultipleBlogs.length + 1);
+  expect(blogsAtEnd).toEqual(
+    expect.arrayContaining([expect.objectContaining(newBlog)])
+  );
 });
 
 afterAll(async () => {
