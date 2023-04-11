@@ -81,6 +81,24 @@ test("if likes are missing default to 0", async () => {
   );
 });
 
+test("if title is missing respond with 400 bad request", async () => {
+  const noTitleBlog = {
+    author: "Test Testerson",
+    url: "http://www.testblog.com/this-is-a-test-blog",
+  };
+
+  await api.post("/api/blogs").send(noTitleBlog).expect(400);
+});
+
+test("if url is missing respond with 400 bad request", async () => {
+  const noUrlBlog = {
+    title: "Test blog",
+    author: "Test Testerson",
+  };
+
+  await api.post("/api/blogs").send(noUrlBlog).expect(400);
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
 });
