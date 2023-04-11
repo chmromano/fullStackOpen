@@ -21,8 +21,16 @@ test("blogs are returned as json", async () => {
 
 test("all blogs are returned", async () => {
   const response = await api.get("/api/blogs");
+  const blogList = response.body;
 
-  expect(response.body).toHaveLength(testHelper.listWithMultipleBlogs.length);
+  expect(blogList).toHaveLength(testHelper.listWithMultipleBlogs.length);
+});
+
+test("blogs have the 'id' propery", async () => {
+  const response = await api.get("/api/blogs");
+  const blogList = response.body;
+
+  blogList.forEach((blog) => expect(blog.id).toBeDefined());
 });
 
 afterAll(async () => {

@@ -11,16 +11,19 @@ test("dummy returns one", () => {
 describe("total likes", () => {
   test("of empty list is 0", () => {
     const result = listHelper.totalLikes(testHelper.listWithNoBlogs);
+
     expect(result).toBe(0);
   });
 
   test("of 1 blog is equal to that blog", () => {
     const result = listHelper.totalLikes(testHelper.listWithOneBlog);
+
     expect(result).toBe(5);
   });
 
   test("of multiple blogs is equal to sum of likes", () => {
     const result = listHelper.totalLikes(testHelper.listWithMultipleBlogs);
+
     expect(result).toBe(48);
   });
 });
