@@ -32,7 +32,6 @@
     "morgan": "^1.10.0"
   },
   "jest": {
-    "testEnvironment": "node",
-    "globalTeardown": "./tests/teardown.js"
+    "testEnvironment": "node"
   }
 }
