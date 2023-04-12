@@ -4,7 +4,7 @@ const Blog = require("../models/blog");
 blogsRouter.get("/", async (request, response) => {
   const blogs = await Blog.find({});
 
-  response.json(blogs);
+  response.status(200).json(blogs);
 });
 
 blogsRouter.post("/", async (request, response) => {
@@ -17,7 +17,9 @@ blogsRouter.post("/", async (request, response) => {
 blogsRouter.delete("/:id", async (request, response) => {
   const deletedBlog = await Blog.findByIdAndRemove(request.params.id);
 
-  deletedBlog ? response.status(204).end() : response.status(404).end();
+  deletedBlog
+    ? response.status(204).end()
+    : response.status(404).json({ error: "resource does not exist" });
 });
 
 blogsRouter.patch("/:id", async (request, response) => {
