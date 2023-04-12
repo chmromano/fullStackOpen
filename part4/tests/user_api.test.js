@@ -61,6 +61,79 @@ describe("POST", () => {
     );
   });
 
+  test("a user without name can be added to the database", async () => {
+    const noNameUser = {
+      username: "the_senate",
+      password: "scn392rh4rjb",
+    };
+
+    await api.post("/api/users").send(noNameUser).expect(201);
+
+    delete noNameUser.password;
+
+    const usersAtEnd = await testHelper.usersInDb();
+
+    expect(usersAtEnd).toHaveLength(
+      testHelper.listWithMultipleUsers.length + 1
+    );
+    expect(usersAtEnd).toContainEqual(expect.objectContaining(noNameUser));
+  });
+
+  test("a user with a 3 character name can be added to the database", async () => {
+    const shortUsernameUser = {
+      username: "the",
+      name: "Sheev Palpatine",
+      password: "nonHashedPw",
+    };
+
+    await api.post("/api/users").send(shortUsernameUser).expect(201);
+
+    delete shortUsernameUser.password;
+
+    const usersAtEnd = await testHelper.usersInDb();
+
+    expect(usersAtEnd).toHaveLength(
+      testHelper.listWithMultipleUsers.length + 1
+    );
+    expect(usersAtEnd).toContainEqual(
+      expect.objectContaining(shortUsernameUser)
+    );
+  });
+
+  test("if username is shorter than 3 respond with 400 bad request", async () => {
+    const shortUsernameUser = {
+      username: "th",
+      name: "Sheev Palpatine",
+      password: "nonHashedPw",
+    };
+
+    await api.post("/api/users").send(shortUsernameUser).expect(400);
+
+    const usersAtEnd = await testHelper.usersInDb();
+
+    expect(usersAtEnd).toHaveLength(testHelper.listWithMultipleUsers.length);
+    expect(usersAtEnd).not.toContainEqual(
+      expect.objectContaining(shortUsernameUser)
+    );
+  });
+
+  test("if username already exists respond with 400 bad request", async () => {
+    const postedUser = {
+      username: "the_senate",
+      name: "Sheev Palpatine",
+      password: "nonHashedPw",
+    };
+
+    await api.post("/api/users").send(postedUser).expect(201);
+    await api.post("/api/users").send(postedUser).expect(400);
+
+    const usersAtEnd = await testHelper.usersInDb();
+
+    expect(usersAtEnd).toHaveLength(
+      testHelper.listWithMultipleUsers.length + 1
+    );
+  });
+
   test("if username is missing respond with 400 bad request", async () => {
     const noUsernameUser = {
       name: "Sheev Palpatine",
@@ -77,18 +150,42 @@ describe("POST", () => {
     );
   });
 
-  test("if name is missing respond with 400 bad request", async () => {
-    const noNameUser = {
+  test("if password is shorter than 3 respond with 400 bad request", async () => {
+    const shortPasswordUser = {
       username: "the_senate",
-      password: "scn392rh4rjb",
+      name: "Sheev Palpatine",
+      password: "no",
     };
 
-    await api.post("/api/users").send(noNameUser).expect(400);
+    await api.post("/api/users").send(shortPasswordUser).expect(400);
 
     const usersAtEnd = await testHelper.usersInDb();
 
     expect(usersAtEnd).toHaveLength(testHelper.listWithMultipleUsers.length);
-    expect(usersAtEnd).not.toContainEqual(expect.objectContaining(noNameUser));
+    expect(usersAtEnd).not.toContainEqual(
+      expect.objectContaining(shortPasswordUser)
+    );
+  });
+
+  test("if password is exactly 3 characters add user to database", async () => {
+    const shortPasswordUser = {
+      username: "the_senate",
+      name: "Sheev Palpatine",
+      password: "now",
+    };
+
+    await api.post("/api/users").send(shortPasswordUser).expect(201);
+
+    delete shortPasswordUser.password;
+
+    const usersAtEnd = await testHelper.usersInDb();
+
+    expect(usersAtEnd).toHaveLength(
+      testHelper.listWithMultipleUsers.length + 1
+    );
+    expect(usersAtEnd).toContainEqual(
+      expect.objectContaining(shortPasswordUser)
+    );
   });
 
   test("if password is missing respond with 400 bad request", async () => {

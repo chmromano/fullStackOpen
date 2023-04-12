@@ -16,6 +16,11 @@ usersRouter.post("/", async (request, response) => {
   if (password === undefined)
     return response.status(400).json({ error: "password cannot be undefined" });
 
+  if (password.length < 3)
+    return response
+      .status(400)
+      .json({ error: "password must be 3 characters or longer" });
+
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
