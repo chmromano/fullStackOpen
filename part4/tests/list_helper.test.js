@@ -10,7 +10,7 @@ test("dummy returns one", () => {
 
 describe("total likes", () => {
   test("of empty list is 0", () => {
-    const result = listHelper.totalLikes(testHelper.listWithNoBlogs);
+    const result = listHelper.totalLikes(testHelper.emptyList);
 
     expect(result).toBe(0);
   });
@@ -30,7 +30,7 @@ describe("total likes", () => {
 
 describe("favourite blog", () => {
   test("of empty list return empty object", () => {
-    const result = listHelper.favoriteBlog(testHelper.listWithNoBlogs);
+    const result = listHelper.favoriteBlog(testHelper.emptyList);
 
     expect(result).toEqual({});
   });
@@ -60,7 +60,7 @@ describe("favourite blog", () => {
 
 describe("most blogs", () => {
   test("of empty list return empty object", () => {
-    const result = listHelper.mostBlogs(testHelper.listWithNoBlogs);
+    const result = listHelper.mostBlogs(testHelper.emptyList);
 
     expect(result).toEqual({});
   });
@@ -88,7 +88,7 @@ describe("most blogs", () => {
 
 describe("most likes", () => {
   test("of empty list return empty object", () => {
-    const result = listHelper.mostLikes(testHelper.listWithNoBlogs);
+    const result = listHelper.mostLikes(testHelper.emptyList);
 
     expect(result).toEqual({});
   });

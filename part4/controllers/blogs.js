@@ -39,7 +39,7 @@ blogsRouter.patch("/:id", async (request, response) => {
 
   updatedBlog
     ? response.status(200).json(updatedBlog)
-    : response.status(400).json({ error: "resource does not exist" });
+    : response.status(404).json({ error: "resource does not exist" });
 });
 
 module.exports = blogsRouter;

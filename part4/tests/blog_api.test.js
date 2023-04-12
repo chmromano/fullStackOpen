@@ -13,6 +13,13 @@ beforeEach(async () => {
 });
 
 describe("GET", () => {
+  test("blogs have the 'id' propery", async () => {
+    const response = await api.get("/api/blogs");
+    const blogList = response.body;
+
+    blogList.forEach((blog) => expect(blog.id).toBeDefined());
+  });
+
   test("all blogs are returned as json", async () => {
     await api
       .get("/api/blogs")
@@ -50,6 +57,59 @@ describe("POST", () => {
     expect(blogsAtEnd).toEqual(
       expect.arrayContaining([expect.objectContaining(postedBlog)])
     );
+  });
+
+  test("if likes are missing default to 0", async () => {
+    const postedBlog = {
+      title: "Test blog",
+      author: "Test Testerson",
+      url: "http://www.testblog.com/this-is-a-test-blog",
+    };
+
+    const expectedBlog = {
+      title: "Test blog",
+      author: "Test Testerson",
+      url: "http://www.testblog.com/this-is-a-test-blog",
+      likes: 0,
+    };
+
+    await api
+      .post("/api/blogs")
+      .send(postedBlog)
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
+
+    const blogsAtEnd = await testHelper.blogsInDb();
+    expect(blogsAtEnd).toHaveLength(
+      testHelper.listWithMultipleBlogs.length + 1
+    );
+    expect(blogsAtEnd).toEqual(
+      expect.arrayContaining([expect.objectContaining(expectedBlog)])
+    );
+  });
+
+  test("if title is missing respond with 400 bad request", async () => {
+    const noTitleBlog = {
+      author: "Test Testerson",
+      url: "http://www.testblog.com/this-is-a-test-blog",
+    };
+
+    await api.post("/api/blogs").send(noTitleBlog).expect(400);
+
+    const blogsAtEnd = await testHelper.blogsInDb();
+    expect(blogsAtEnd).toHaveLength(testHelper.listWithMultipleBlogs.length);
+  });
+
+  test("if url is missing respond with 400 bad request", async () => {
+    const noUrlBlog = {
+      title: "Test blog",
+      author: "Test Testerson",
+    };
+
+    await api.post("/api/blogs").send(noUrlBlog).expect(400);
+
+    const blogsAtEnd = await testHelper.blogsInDb();
+    expect(blogsAtEnd).toHaveLength(testHelper.listWithMultipleBlogs.length);
   });
 });
 
@@ -142,7 +202,7 @@ describe("PATCH", () => {
     expect(blogsAtEnd).toContainEqual(expect.objectContaining(updatedBlog));
   });
 
-  test("update of a blog fails with status code 400 if blog does not exist", async () => {
+  test("update of a blog fails with status code 404 if blog does not exist", async () => {
     const blogsAtStart = await testHelper.blogsInDb();
     const blogToUpdate = blogsAtStart[0];
 
@@ -158,7 +218,7 @@ describe("PATCH", () => {
     await api
       .patch(`/api/blogs/${blogToUpdate.id}`)
       .send(updatedBlog)
-      .expect(400);
+      .expect(404);
 
     updatedBlog.id = blogToUpdate.id;
 
@@ -168,68 +228,6 @@ describe("PATCH", () => {
       testHelper.listWithMultipleBlogs.length - 1
     );
     expect(blogsAtEnd).not.toContainEqual(expect.objectContaining(updatedBlog));
-  });
-});
-
-describe("validate", () => {
-  test("blogs have the 'id' propery", async () => {
-    const response = await api.get("/api/blogs");
-    const blogList = response.body;
-
-    blogList.forEach((blog) => expect(blog.id).toBeDefined());
-  });
-
-  test("if likes are missing default to 0", async () => {
-    const postedBlog = {
-      title: "Test blog",
-      author: "Test Testerson",
-      url: "http://www.testblog.com/this-is-a-test-blog",
-    };
-
-    const expectedBlog = {
-      title: "Test blog",
-      author: "Test Testerson",
-      url: "http://www.testblog.com/this-is-a-test-blog",
-      likes: 0,
-    };
-
-    await api
-      .post("/api/blogs")
-      .send(postedBlog)
-      .expect(201)
-      .expect("Content-Type", /application\/json/);
-
-    const blogsAtEnd = await testHelper.blogsInDb();
-    expect(blogsAtEnd).toHaveLength(
-      testHelper.listWithMultipleBlogs.length + 1
-    );
-    expect(blogsAtEnd).toEqual(
-      expect.arrayContaining([expect.objectContaining(expectedBlog)])
-    );
-  });
-
-  test("if title is missing respond with 400 bad request", async () => {
-    const noTitleBlog = {
-      author: "Test Testerson",
-      url: "http://www.testblog.com/this-is-a-test-blog",
-    };
-
-    await api.post("/api/blogs").send(noTitleBlog).expect(400);
-
-    const blogsAtEnd = await testHelper.blogsInDb();
-    expect(blogsAtEnd).toHaveLength(testHelper.listWithMultipleBlogs.length);
-  });
-
-  test("if url is missing respond with 400 bad request", async () => {
-    const noUrlBlog = {
-      title: "Test blog",
-      author: "Test Testerson",
-    };
-
-    await api.post("/api/blogs").send(noUrlBlog).expect(400);
-
-    const blogsAtEnd = await testHelper.blogsInDb();
-    expect(blogsAtEnd).toHaveLength(testHelper.listWithMultipleBlogs.length);
   });
 });
 
