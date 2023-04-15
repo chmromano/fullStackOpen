@@ -1,12 +1,12 @@
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hbmRvIiwiaWQiOiI2NDNhODQ5YzI1ODIzYmY0YWZiMjg0NDUiLCJpYXQiOjE2ODE1NTkyNzV9.et6oYPSyxSLQWGe5Y7ibMbT0hgXOYpnAHLG33SzoMpg
 
 {
   "title": "How to program",
   "author": "Jiminy Cricket",
   "url": "http://localhost.com",
-  "likes": 44,
-  "user": "643a842525823bf4afb2843d"
+  "likes": 44
 }
 
 ###
@@ -18,8 +18,7 @@ content-type: application/json
   "title": "Dance",
   "author": "Timon",
   "url": "http://suomi.fi",
-  "likes": 23,
-  "user": "643a849c25823bf4afb28445"
+  "likes": 23
 }
 
 ###
