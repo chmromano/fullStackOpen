@@ -5,7 +5,8 @@ content-type: application/json
   "title": "How to program",
   "author": "Jiminy Cricket",
   "url": "http://localhost.com",
-  "likes": 44
+  "likes": 44,
+  "user": "643a842525823bf4afb2843d"
 }
 
 ###
@@ -17,7 +18,8 @@ content-type: application/json
   "title": "Dance",
   "author": "Timon",
   "url": "http://suomi.fi",
-  "likes": 23
+  "likes": 23,
+  "user": "643a849c25823bf4afb28445"
 }
 
 ###

@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "password required"],
   },
+  blogs: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Blog",
+  },
 });
 
 userSchema.set("toJSON", {
@@ -24,6 +28,6 @@ userSchema.set("toJSON", {
   },
 });
 
-userSchema.plugin(uniqueValidator);
+userSchema.plugin(uniqueValidator, { message: "{PATH} must be unique" });
 
 module.exports = mongoose.model("User", userSchema);

@@ -111,6 +111,26 @@ describe("POST", () => {
     const blogsAtEnd = await testHelper.blogsInDb();
     expect(blogsAtEnd).toHaveLength(testHelper.listWithMultipleBlogs.length);
   });
+
+  // test("blog has user assigned to it", async () => {
+  //   const postedBlog = {
+  //     title: "Test blog",
+  //     author: "Test Testerson",
+  //     url: "http://www.testblog.com/this-is-a-test-blog",
+  //     likes: 3,
+  //   };
+
+  //   await api.post("/api/blogs").send(postedBlog).expect(201);
+
+  //   const response = await api.get("/api/blogs");
+  //   const blogList = response.body;
+
+  //   blogList.forEach((blog) => {
+  //     expect(blog.user).toBeDefined();
+  //     expect(blog.user.username).toBeDefined();
+  //     expect(blog.user.id).toBeDefined();
+  //   });
+  // });
 });
 
 describe("DELETE", () => {
