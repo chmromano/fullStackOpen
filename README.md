@@ -4,24 +4,31 @@
 
 ### Part 0
 
-- [x] 0.4: New note diagram
-- [x] 0.5: Single page app diagram
-- [x] 0.6: New note in Single page app diagram
+- [x] 0.4: new note diagram
+- [x] 0.5: single page app diagram
+- [x] 0.6: new note in Single page app diagram
 
 ### Part 1
 
-- [x] courseinfo
+- [x] course info
 - [x] unicafe
 - [x] anecdotes
 
 ### Part 2
 
-- [x] courseinfo
+- [x] course info
 - [x] phonebook
-- [x] dataforcountries
+- [x] data for countries
 
-### Part 3 ([separate repository](https://github.com/chmromano/fullStackOpen-Part3))
+### Part 3 (submodule, [separate repository](https://github.com/chmromano/fullStackOpen-Part3))
 
-- [x] phonebookbackend
-- [x] phonebookdatabase
-- [x] lintconfiguration
+- [x] phonebook backend
+- [x] phonebook database
+- [x] lint configuration
+
+### Part 4
+
+- [x] blog list
+- [x] helper functions and unit tests
+- [x] blog list tests
+- [x] blog list expansions

@@ -1,0 +1,48 @@
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+authorization: Bearer
+
+{
+  "title": "How to program",
+  "author": "Jiminy Cricket",
+  "url": "http://localhost.com",
+  "likes": 44
+}
+
+###
+
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+
+{
+  "title": "Dance",
+  "author": "Timon",
+  "url": "http://suomi.fi",
+  "likes": 23
+}
+
+###
+
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Christopher"
+}
+
+###
+
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+
+{
+    "number": "058736482"
+}
+
+###
+
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+
+{
+}
