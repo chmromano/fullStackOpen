@@ -37,22 +37,14 @@ describe("favourite blog", () => {
 
   test("of 1 blog returns that blog", () => {
     const result = listHelper.favoriteBlog(testHelper.listWithOneBlog);
-    const expected = {
-      title: "Go To Statement Considered Harmful",
-      author: "Edsger W. Dijkstra",
-      likes: 5,
-    };
+    const expected = testHelper.listWithOneBlog[0];
 
     expect(result).toEqual(expected);
   });
 
   test("of multiple blogs returns last blog with most likes", () => {
     const result = listHelper.favoriteBlog(testHelper.listWithMultipleBlogs);
-    const expected = {
-      title: "TDD harms architecture",
-      author: "Robert C. Martin",
-      likes: 12,
-    };
+    const expected = testHelper.listWithMultipleBlogs[4];
 
     expect(result).toEqual(expected);
   });

@@ -38,9 +38,9 @@ describe("GET", () => {
 describe("POST", () => {
   test("a user can be added to the database", async () => {
     const postedUser = {
-      username: "the_senate",
       name: "Sheev Palpatine",
       password: "nonHashedPw",
+      username: "the_senate",
     };
 
     await api
@@ -63,8 +63,8 @@ describe("POST", () => {
 
   test("a user without name can be added to the database", async () => {
     const noNameUser = {
-      username: "the_senate",
       password: "scn392rh4rjb",
+      username: "the_senate",
     };
 
     await api.post("/api/users").send(noNameUser).expect(201);
@@ -81,9 +81,9 @@ describe("POST", () => {
 
   test("a user with a 3 character name can be added to the database", async () => {
     const shortUsernameUser = {
-      username: "the",
       name: "Sheev Palpatine",
       password: "nonHashedPw",
+      username: "the",
     };
 
     await api.post("/api/users").send(shortUsernameUser).expect(201);
@@ -102,9 +102,9 @@ describe("POST", () => {
 
   test("if username is shorter than 3 respond with 400 bad request", async () => {
     const shortUsernameUser = {
-      username: "th",
       name: "Sheev Palpatine",
       password: "nonHashedPw",
+      username: "th",
     };
 
     await api.post("/api/users").send(shortUsernameUser).expect(400);
@@ -119,9 +119,9 @@ describe("POST", () => {
 
   test("if username already exists respond with 400 bad request", async () => {
     const postedUser = {
-      username: "the_senate",
       name: "Sheev Palpatine",
       password: "nonHashedPw",
+      username: "the_senate",
     };
 
     await api.post("/api/users").send(postedUser).expect(201);
@@ -152,9 +152,9 @@ describe("POST", () => {
 
   test("if password is shorter than 3 respond with 400 bad request", async () => {
     const shortPasswordUser = {
-      username: "the_senate",
       name: "Sheev Palpatine",
       password: "no",
+      username: "the_senate",
     };
 
     await api.post("/api/users").send(shortPasswordUser).expect(400);
@@ -169,9 +169,9 @@ describe("POST", () => {
 
   test("if password is exactly 3 characters add user to database", async () => {
     const shortPasswordUser = {
-      username: "the_senate",
       name: "Sheev Palpatine",
       password: "now",
+      username: "the_senate",
     };
 
     await api.post("/api/users").send(shortPasswordUser).expect(201);
@@ -190,8 +190,8 @@ describe("POST", () => {
 
   test("if password is missing respond with 400 bad request", async () => {
     const noPasswordUser = {
-      username: "the_senate",
       name: "Sheev Palpatine",
+      username: "the_senate",
     };
 
     await api.post("/api/users").send(noPasswordUser).expect(400);
@@ -206,9 +206,9 @@ describe("POST", () => {
 
   test("if password is null respond with 400 bad request", async () => {
     const nullPasswordUser = {
-      username: "the_senate",
       name: "Sheev Palpatine",
       password: null,
+      username: "the_senate",
     };
 
     await api.post("/api/users").send(nullPasswordUser).expect(400);
