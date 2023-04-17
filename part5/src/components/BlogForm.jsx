@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import Togglable from "./Togglable";
 import blogService from "./../services/blogs";
 
 const BlogForm = ({ blogs, setBlogs, setMessage }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
+
+  const blogFormRef = useRef();
 
   const addBlog = async (event) => {
     event.preventDefault();
@@ -18,6 +21,7 @@ const BlogForm = ({ blogs, setBlogs, setMessage }) => {
 
       const returnedBlog = await blogService.create(blogObject);
       setBlogs(blogs.concat(returnedBlog));
+      blogFormRef.current.toggleVisibility();
 
       setMessage({
         error: false,
@@ -39,7 +43,7 @@ const BlogForm = ({ blogs, setBlogs, setMessage }) => {
   };
 
   return (
-    <>
+    <Togglable label="Add blog" ref={blogFormRef}>
       <h2>Create new blog</h2>
       <form onSubmit={addBlog}>
         <label htmlFor="title">Title:</label>
@@ -74,7 +78,7 @@ const BlogForm = ({ blogs, setBlogs, setMessage }) => {
         <br />
         <button type="submit">Create</button>
       </form>
-    </>
+    </Togglable>
   );
 };
 
