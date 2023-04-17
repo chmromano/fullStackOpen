@@ -19,7 +19,7 @@ const LoggedUser = ({ user, setUser, setBlogs, setMessage }) => {
   return (
     <>
       <p>
-        Logged in as {user.name}
+        Logged in as {user.username}
         <br />
         <button onClick={handleLogout}>Logout</button>
       </p>
