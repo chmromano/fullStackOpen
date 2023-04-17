@@ -44,7 +44,12 @@ const App = () => {
             setBlogs={setBlogs}
             setMessage={setMessage}
           />
-          <BlogForm blogs={blogs} setBlogs={setBlogs} setMessage={setMessage} />
+          <BlogForm
+            blogs={blogs}
+            setBlogs={setBlogs}
+            user={user}
+            setMessage={setMessage}
+          />
           <BlogList blogs={blogs} />
         </>
       )}

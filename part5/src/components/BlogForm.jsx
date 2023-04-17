@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Togglable from "./Togglable";
 import blogService from "./../services/blogs";
 
-const BlogForm = ({ blogs, setBlogs, setMessage }) => {
+const BlogForm = ({ blogs, setBlogs, user, setMessage }) => {
   const [blog, setBlog] = useState({ author: "", title: "", url: "" });
 
   const blogFormRef = useRef();
@@ -11,8 +11,19 @@ const BlogForm = ({ blogs, setBlogs, setMessage }) => {
     event.preventDefault();
 
     try {
-      const returnedBlog = await blogService.create(blog);
-      setBlogs(blogs.concat(returnedBlog));
+      const response = await blogService.create(blog);
+
+      const blogToSave = {
+        ...response,
+        user: {
+          id: response.user,
+          name: user.name,
+          username: user.username,
+        },
+      };
+
+      setBlogs(blogs.concat(blogToSave));
+
       blogFormRef.current.toggleVisibility();
 
       setMessage({
