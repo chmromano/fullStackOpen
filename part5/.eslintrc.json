@@ -28,6 +28,7 @@
     "prefer-template": 2,
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
+    "react/jsx-filename-extension": 1,
     "sort-imports": "error",
     "sort-keys": [
       "error",
