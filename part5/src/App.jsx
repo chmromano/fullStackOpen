@@ -50,7 +50,7 @@ const App = () => {
             user={user}
             setMessage={setMessage}
           />
-          <BlogList blogs={blogs} />
+          <BlogList blogs={blogs} setMessage={setMessage} />
         </>
       )}
     </>

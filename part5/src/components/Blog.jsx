@@ -1,28 +1,51 @@
 import React, { useState } from "react";
+import blogService from "./../services/blogs";
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, setMessage }) => {
+  const [statefulBlog, setStatefulBlog] = useState(blog);
   const [visible, setVisible] = useState(false);
 
-  const blogStyle = {
-    border: "solid",
-    borderWidth: 1,
-    marginBottom: 5,
-    paddingLeft: 2,
-    paddingTop: 10,
+  const updateLikes = async () => {
+    try {
+      const blogToUpdate = {
+        ...statefulBlog,
+        likes: statefulBlog.likes + 1,
+        user: statefulBlog.user.id,
+      };
+
+      delete blogToUpdate.id;
+
+      await blogService.update(statefulBlog.id, blogToUpdate);
+
+      setStatefulBlog({ ...statefulBlog, likes: statefulBlog.likes + 1 });
+
+      setMessage({
+        error: false,
+        text: `Like added to blog "${statefulBlog.title}"`,
+      });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    } catch {
+      setMessage({ error: true, text: "Something went wrong" });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
   };
 
   return (
-    <div style={blogStyle}>
-      {blog.title} {blog.author}
+    <div className="blog">
+      {statefulBlog.title} {statefulBlog.author}
       <button onClick={() => setVisible(!visible)}>
         {visible ? "Hide" : "View"}
       </button>
       <div style={{ display: visible ? "" : "none" }}>
-        {blog.url}
+        {statefulBlog.url}
         <br />
-        {blog.likes} <button>Like</button>
+        {statefulBlog.likes} <button onClick={updateLikes}>Like</button>
         <br />
-        {blog.user.username}
+        {statefulBlog.user.username}
       </div>
     </div>
   );

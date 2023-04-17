@@ -86,6 +86,42 @@ blogsRouter.patch("/:id", async (request, response) => {
     likes,
     title,
     url,
+    user: request.user.id,
+  };
+
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
+    new: true,
+    runValidators: true,
+  });
+
+  updatedBlog
+    ? response.status(200).json(updatedBlog)
+    : response.status(404).json({ error: "resource does not exist" });
+});
+
+blogsRouter.put("/:id", async (request, response) => {
+  const { title, author, url, likes } = request.body;
+
+  if (!request.user) {
+    return response.status(401).json({ error: "invalid token" });
+  }
+
+  const checkBlog = await Blog.findById(request.params.id, { user: 1 });
+
+  if (!checkBlog) {
+    return response.status(404).json({ error: "resource does not exist" });
+  }
+
+  if (request.user.id !== checkBlog.user.toString()) {
+    return response.status(401).json({ error: "not authorised" });
+  }
+
+  const blog = {
+    author,
+    likes,
+    title,
+    url,
+    user: request.user.id,
   };
 
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
