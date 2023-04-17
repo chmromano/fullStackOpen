@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import PropTypes from "prop-types";
 import Togglable from "./Togglable";
 import blogService from "./../services/blogs";
 
@@ -81,6 +82,13 @@ const BlogForm = ({ blogs, setBlogs, user, setMessage }) => {
       </form>
     </Togglable>
   );
+};
+
+BlogForm.propTypes = {
+  blogs: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setBlogs: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default BlogForm;

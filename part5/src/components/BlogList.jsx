@@ -1,4 +1,5 @@
 import Blog from "./Blog";
+import PropTypes from "prop-types";
 import React from "react";
 
 const BlogList = ({ user, blogs, setBlogs, setMessage }) => {
@@ -17,6 +18,13 @@ const BlogList = ({ user, blogs, setBlogs, setMessage }) => {
       ))}
     </>
   );
+};
+
+BlogList.propTypes = {
+  blogs: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setBlogs: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default BlogList;
