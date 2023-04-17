@@ -37,7 +37,7 @@ const App = () => {
         <LoginForm setUser={setUser} setMessage={setMessage} />
       ) : (
         <>
-          <h2>Blogs</h2>
+          <h2>Blog list application</h2>
           <LoggedUser
             user={user}
             setUser={setUser}

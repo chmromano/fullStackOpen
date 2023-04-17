@@ -36,29 +36,32 @@ const LoginForm = ({ setUser, setMessage }) => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <label htmlFor="username">Username:</label>
-      <br />
-      <input
-        type="text"
-        value={username}
-        name="Username"
-        id="username"
-        onChange={({ target }) => setUsername(target.value)}
-      />
-      <br />
-      <label htmlFor="password">Password:</label>
-      <br />
-      <input
-        type="password"
-        value={password}
-        name="Password"
-        id="password"
-        onChange={({ target }) => setPassword(target.value)}
-      />
-      <br />
-      <button type="submit">login</button>
-    </form>
+    <>
+      <h2>Log in to the application</h2>
+      <form onSubmit={handleLogin}>
+        <label htmlFor="username">Username:</label>
+        <br />
+        <input
+          type="text"
+          value={username}
+          name="Username"
+          id="username"
+          onChange={({ target }) => setUsername(target.value)}
+        />
+        <br />
+        <label htmlFor="password">Password:</label>
+        <br />
+        <input
+          type="password"
+          value={password}
+          name="Password"
+          id="password"
+          onChange={({ target }) => setPassword(target.value)}
+        />
+        <br />
+        <button type="submit">login</button>
+      </form>
+    </>
   );
 };
 

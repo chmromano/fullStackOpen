@@ -39,39 +39,42 @@ const BlogForm = ({ blogs, setBlogs, setMessage }) => {
   };
 
   return (
-    <form onSubmit={addBlog}>
-      <label htmlFor="title">Title:</label>
-      <br />
-      <input
-        type="text"
-        value={title}
-        name="Title"
-        id="title"
-        onChange={({ target }) => setTitle(target.value)}
-      />
-      <br />
-      <label htmlFor="author">Author:</label>
-      <br />
-      <input
-        type="text"
-        value={author}
-        name="Author"
-        id="author"
-        onChange={({ target }) => setAuthor(target.value)}
-      />
-      <br />
-      <label htmlFor="url">Url:</label>
-      <br />
-      <input
-        type="text"
-        value={url}
-        name="Url"
-        id="utl"
-        onChange={({ target }) => setUrl(target.value)}
-      />
-      <br />
-      <button type="submit">Create</button>
-    </form>
+    <>
+      <h2>Create new blog</h2>
+      <form onSubmit={addBlog}>
+        <label htmlFor="title">Title:</label>
+        <br />
+        <input
+          type="text"
+          value={title}
+          name="Title"
+          id="title"
+          onChange={({ target }) => setTitle(target.value)}
+        />
+        <br />
+        <label htmlFor="author">Author:</label>
+        <br />
+        <input
+          type="text"
+          value={author}
+          name="Author"
+          id="author"
+          onChange={({ target }) => setAuthor(target.value)}
+        />
+        <br />
+        <label htmlFor="url">Url:</label>
+        <br />
+        <input
+          type="text"
+          value={url}
+          name="Url"
+          id="utl"
+          onChange={({ target }) => setUrl(target.value)}
+        />
+        <br />
+        <button type="submit">Create</button>
+      </form>
+    </>
   );
 };
 
