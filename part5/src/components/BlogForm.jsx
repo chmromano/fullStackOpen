@@ -3,9 +3,7 @@ import Togglable from "./Togglable";
 import blogService from "./../services/blogs";
 
 const BlogForm = ({ blogs, setBlogs, setMessage }) => {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setUrl] = useState("");
+  const [blog, setBlog] = useState({ author: "", title: "", url: "" });
 
   const blogFormRef = useRef();
 
@@ -13,27 +11,19 @@ const BlogForm = ({ blogs, setBlogs, setMessage }) => {
     event.preventDefault();
 
     try {
-      const blogObject = {
-        author,
-        title,
-        url,
-      };
-
-      const returnedBlog = await blogService.create(blogObject);
+      const returnedBlog = await blogService.create(blog);
       setBlogs(blogs.concat(returnedBlog));
       blogFormRef.current.toggleVisibility();
 
       setMessage({
         error: false,
-        text: `Successfully added blog "${title}" by ${author}`,
+        text: `Successfully added blog "${blog.title}" by ${blog.author}`,
       });
       setTimeout(() => {
         setMessage(null);
       }, 5000);
 
-      setTitle("");
-      setAuthor("");
-      setUrl("");
+      setBlog({ author: "", title: "", url: "" });
     } catch {
       setMessage({ error: true, text: "Something went wrong" });
       setTimeout(() => {
@@ -50,30 +40,30 @@ const BlogForm = ({ blogs, setBlogs, setMessage }) => {
         <br />
         <input
           type="text"
-          value={title}
+          value={blog.title}
           name="Title"
           id="title"
-          onChange={({ target }) => setTitle(target.value)}
+          onChange={({ target }) => setBlog({ ...blog, title: target.value })}
         />
         <br />
         <label htmlFor="author">Author:</label>
         <br />
         <input
           type="text"
-          value={author}
+          value={blog.author}
           name="Author"
           id="author"
-          onChange={({ target }) => setAuthor(target.value)}
+          onChange={({ target }) => setBlog({ ...blog, author: target.value })}
         />
         <br />
         <label htmlFor="url">Url:</label>
         <br />
         <input
           type="text"
-          value={url}
+          value={blog.url}
           name="Url"
           id="utl"
-          onChange={({ target }) => setUrl(target.value)}
+          onChange={({ target }) => setBlog({ ...blog, url: target.value })}
         />
         <br />
         <button type="submit">Create</button>
