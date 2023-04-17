@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import blogService from "./../services/blogs";
 
-const BlogForm = ({ blogs, setBlogs }) => {
+const BlogForm = ({ blogs, setBlogs, setMessage }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -9,17 +9,33 @@ const BlogForm = ({ blogs, setBlogs }) => {
   const addBlog = async (event) => {
     event.preventDefault();
 
-    const blogObject = {
-      author,
-      title,
-      url,
-    };
+    try {
+      const blogObject = {
+        author,
+        title,
+        url,
+      };
 
-    const returnedBlog = await blogService.create(blogObject);
-    setBlogs(blogs.concat(returnedBlog));
-    setTitle("");
-    setAuthor("");
-    setUrl("");
+      const returnedBlog = await blogService.create(blogObject);
+      setBlogs(blogs.concat(returnedBlog));
+
+      setMessage({
+        error: false,
+        text: `Successfully added blog "${title}" by ${author}`,
+      });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+
+      setTitle("");
+      setAuthor("");
+      setUrl("");
+    } catch {
+      setMessage({ error: true, text: "Something went wrong" });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
   };
 
   return (

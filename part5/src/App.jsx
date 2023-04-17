@@ -9,7 +9,7 @@ import blogService from "./services/blogs";
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     if (user !== null) {
@@ -31,15 +31,20 @@ const App = () => {
 
   return (
     <>
-      <Notification message={errorMessage} />
+      <Notification message={message} />
 
       {user === null ? (
-        <LoginForm setUser={setUser} setErrorMessage={setErrorMessage} />
+        <LoginForm setUser={setUser} setMessage={setMessage} />
       ) : (
         <>
           <h2>Blogs</h2>
-          <LoggedUser user={user} setUser={setUser} setBlogs={setBlogs} />
-          <BlogForm blogs={blogs} setBlogs={setBlogs} />
+          <LoggedUser
+            user={user}
+            setUser={setUser}
+            setBlogs={setBlogs}
+            setMessage={setMessage}
+          />
+          <BlogForm blogs={blogs} setBlogs={setBlogs} setMessage={setMessage} />
           <BlogList blogs={blogs} />
         </>
       )}
