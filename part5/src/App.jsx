@@ -15,7 +15,7 @@ const App = () => {
     if (user !== null) {
       (async () => {
         const blogs = await blogService.getAll();
-        setBlogs(blogs);
+        setBlogs(blogs.sort((a, b) => b.likes - a.likes));
       })();
     }
   }, [user]);
