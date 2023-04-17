@@ -14,7 +14,21 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+    if (user !== null) {
+      (async () => {
+        const response = await blogService.getAll();
+        setBlogs(response);
+      })();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem("loggedBlogListAppUser");
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      blogService.setToken(user.token);
+    }
   }, []);
 
   const handleLogin = async (event) => {
@@ -25,15 +39,29 @@ const App = () => {
         password,
         username,
       });
+      blogService.setToken(user.token);
+      window.localStorage.setItem(
+        "loggedBlogListAppUser",
+        JSON.stringify(user)
+      );
       setUser(user);
       setUsername("");
       setPassword("");
-    } catch (exception) {
-      setErrorMessage("Wrong credentials");
+    } catch {
+      setErrorMessage("Incorrect credentials");
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
     }
+  };
+
+  const handleLogout = () => {
+    window.localStorage.removeItem("loggedBlogListAppUser");
+
+    blogService.setToken(null);
+
+    setUser(null);
+    setBlogs([]);
   };
 
   return (
@@ -51,7 +79,7 @@ const App = () => {
       ) : (
         <>
           <h2>Blogs</h2>
-          <LoggedUser user={user} />
+          <LoggedUser user={user} handleLogout={handleLogout} />
           <BlogList blogs={blogs} />
         </>
       )}
