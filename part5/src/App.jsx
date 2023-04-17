@@ -50,7 +50,12 @@ const App = () => {
             user={user}
             setMessage={setMessage}
           />
-          <BlogList blogs={blogs} setMessage={setMessage} />
+          <BlogList
+            user={user}
+            blogs={blogs}
+            setBlogs={setBlogs}
+            setMessage={setMessage}
+          />
         </>
       )}
     </>

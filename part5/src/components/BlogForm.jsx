@@ -35,7 +35,7 @@ const BlogForm = ({ blogs, setBlogs, user, setMessage }) => {
       }, 5000);
 
       setBlog({ author: "", title: "", url: "" });
-    } catch {
+    } catch (error) {
       setMessage({ error: true, text: "Something went wrong" });
       setTimeout(() => {
         setMessage(null);

@@ -27,7 +27,7 @@ const LoginForm = ({ setUser, setMessage }) => {
       setTimeout(() => {
         setMessage(null);
       }, 5000);
-    } catch {
+    } catch (error) {
       setMessage({ error: true, text: "Incorrect credentials" });
       setTimeout(() => {
         setMessage(null);

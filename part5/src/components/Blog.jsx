@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import blogService from "./../services/blogs";
 
-const Blog = ({ blog, setMessage }) => {
+const Blog = ({ user, blog, blogs, setBlogs, setMessage }) => {
   const [statefulBlog, setStatefulBlog] = useState(blog);
   const [visible, setVisible] = useState(false);
 
@@ -26,7 +26,36 @@ const Blog = ({ blog, setMessage }) => {
       setTimeout(() => {
         setMessage(null);
       }, 5000);
-    } catch {
+    } catch (error) {
+      setMessage({ error: true, text: "Something went wrong" });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+  };
+
+  const deleteBlog = async () => {
+    try {
+      if (
+        window.confirm(
+          `Deleting "${statefulBlog.title}" by ${statefulBlog.author}. Confirm?`
+        )
+      ) {
+        const idToRemove = statefulBlog.id;
+
+        await blogService.remove(statefulBlog.id);
+
+        setBlogs(blogs.filter((blog) => blog.id !== idToRemove));
+
+        setMessage({
+          error: false,
+          text: `Blog "${statefulBlog.title}" deleted`,
+        });
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
+      }
+    } catch (error) {
       setMessage({ error: true, text: "Something went wrong" });
       setTimeout(() => {
         setMessage(null);
@@ -46,6 +75,10 @@ const Blog = ({ blog, setMessage }) => {
         {statefulBlog.likes} <button onClick={updateLikes}>Like</button>
         <br />
         {statefulBlog.user.username}
+        <br />
+        {user.username === statefulBlog.user.username ? (
+          <button onClick={deleteBlog}>Delete</button>
+        ) : null}
       </div>
     </div>
   );
