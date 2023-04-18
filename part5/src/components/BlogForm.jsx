@@ -19,44 +19,47 @@ const BlogForm = ({ onCreate, blogFormRef }) => {
     <Togglable label="Add blog" ref={blogFormRef}>
       <h2>Create new blog</h2>
       <form onSubmit={addBlog}>
-        <label htmlFor="title">Title:</label>
+        <label htmlFor="blogTitle">Title:</label>
         <br />
         <input
           type="text"
           value={blog.title}
-          name="Title"
-          id="title"
+          name="title"
+          id="blogTitle"
           onChange={({ target }) => setBlog({ ...blog, title: target.value })}
         />
         <br />
-        <label htmlFor="author">Author:</label>
+        <label htmlFor="blogAuthor">Author:</label>
         <br />
         <input
           type="text"
           value={blog.author}
-          name="Author"
-          id="author"
+          name="author"
+          id="blogAuthor"
           onChange={({ target }) => setBlog({ ...blog, author: target.value })}
         />
         <br />
-        <label htmlFor="url">Url:</label>
+        <label htmlFor="blogUrl">Url:</label>
         <br />
         <input
           type="text"
           value={blog.url}
-          name="Url"
-          id="utl"
+          name="url"
+          id="blogUrl"
           onChange={({ target }) => setBlog({ ...blog, url: target.value })}
         />
         <br />
-        <button type="submit">Create</button>
+        <button className="blogFormSubmitButton" type="submit">
+          Create
+        </button>
       </form>
     </Togglable>
   );
 };
 
 BlogForm.propTypes = {
-  blogFormRef: PropTypes.object.isRequired,
+  blogFormRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+    .isRequired,
   onCreate: PropTypes.func.isRequired,
 };
 
