@@ -17,8 +17,10 @@ describe("<BlogForm />", () => {
 
   test("calls create blog event handler with correct input data", async () => {
     const user = userEvent.setup();
-    const showBlogFormButton = container.querySelector(".showBlogFormButton");
-    await user.click(showBlogFormButton);
+    const togglableComponentShowButton = container.querySelector(
+      ".togglableComponentShowButton"
+    );
+    await user.click(togglableComponentShowButton);
 
     const title = container.querySelector("#blogTitle");
     const author = container.querySelector("#blogAuthor");
