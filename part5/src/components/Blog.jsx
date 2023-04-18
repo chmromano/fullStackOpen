@@ -70,17 +70,20 @@ const Blog = ({ user, blog, blogs, setBlogs, setMessage }) => {
       <button onClick={() => setVisible(!visible)}>
         {visible ? "Hide" : "View"}
       </button>
-      <div style={{ display: visible ? "" : "none" }}>
-        {statefulBlog.url}
-        <br />
-        {statefulBlog.likes} <button onClick={updateLikes}>Like</button>
-        <br />
-        {statefulBlog.user.username}
-        <br />
-        {user.username === statefulBlog.user.username ? (
-          <button onClick={deleteBlog}>Delete</button>
-        ) : null}
-      </div>
+      {visible ? (
+        <div className="hiddenPartOfBlog">
+          <span className="blogUrl">{statefulBlog.url}</span>
+          <br />
+          <span className="blogLikes">{statefulBlog.likes}</span>
+          <button onClick={updateLikes}>Like</button>
+          <br />
+          {statefulBlog.user.username}
+          <br />
+          {user.username === statefulBlog.user.username ? (
+            <button onClick={deleteBlog}>Delete</button>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 };
