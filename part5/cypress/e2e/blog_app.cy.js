@@ -43,25 +43,18 @@ describe("Blog app", function () {
   });
 
   describe("When logged in", function () {
+    let token;
+    const blog = {
+      author: "Cypress",
+      title: "A blog created by Cypress",
+      url: "https://cypress.com/i-created-this-blog",
+    };
+
     beforeEach(function () {
-      cy.request("POST", `${Cypress.env("BACKEND")}/login`, user).then(
-        (response) => {
-          localStorage.setItem(
-            "loggedBlogAppUser",
-            JSON.stringify(response.body)
-          );
-          cy.visit("");
-        }
-      );
+      cy.login(user).then((value) => (token = value));
     });
 
     it("a blog can be created", function () {
-      const blog = {
-        author: "Cypress",
-        title: "A blog created by Cypress",
-        url: "https://cypress.com/i-created-this-note",
-      };
-
       cy.get(".togglableComponentShowButton").click();
 
       cy.get("#blogTitle").type(blog.title);
@@ -77,6 +70,30 @@ describe("Blog app", function () {
         )
         .and("have.css", "color", "rgb(0, 128, 0)");
       cy.contains(`${blog.title} ${blog.author}`);
+    });
+
+    describe("When a blog is created", function () {
+      beforeEach(function () {
+        cy.createBlog(blog, token);
+      });
+
+      it("blog details can be shown", function () {
+        cy.get(".blogDetailsButton").click();
+
+        cy.get(".hiddenBlogDetails")
+          .should("contain", blog.url)
+          .and("contain", user.username);
+      });
+
+      it("a blog can be liked", function () {
+        cy.get(".blogDetailsButton").click();
+
+        cy.get(".blogLikes").contains("0");
+
+        cy.get(".blogLikeButton").click();
+
+        cy.get(".blogLikes").contains("1");
+      });
     });
   });
 });

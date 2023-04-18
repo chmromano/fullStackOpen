@@ -100,7 +100,18 @@ blogsRouter.patch("/:id", async (request, response) => {
 });
 
 blogsRouter.put("/:id", async (request, response) => {
-  const { title, author, url, likes } = request.body;
+  /*
+  Commented out code is to prevent an unauthorised user
+  from updating any value other than likes on a blog.
+  Maybe not an optimal solution but it works.
+  */
+
+  const {
+    // title,
+    // author,
+    // url,
+    likes,
+  } = request.body;
 
   if (!request.user) {
     return response.status(401).json({ error: "invalid token" });
@@ -112,16 +123,16 @@ blogsRouter.put("/:id", async (request, response) => {
     return response.status(404).json({ error: "resource does not exist" });
   }
 
-  if (request.user.id !== checkBlog.user.toString()) {
-    return response.status(401).json({ error: "not authorised" });
-  }
+  // if (request.user.id !== checkBlog.user.toString()) {
+  //   return response.status(401).json({ error: "not authorised" });
+  // }
 
   const blog = {
-    author,
+    // author,
     likes,
-    title,
-    url,
-    user: request.user.id,
+    // title,
+    // url,
+    // user: request.user.id,
   };
 
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {

@@ -77,10 +77,12 @@ const App = () => {
   const handleCreateBlog = async (blogObject) => {
     try {
       const returnedBlog = await blogService.create(blogObject);
+
       setBlogs(
         blogs.concat({
           ...returnedBlog,
           user: {
+            id: returnedBlog.user,
             name: user.name,
             username: user.username,
           },
@@ -148,14 +150,6 @@ const App = () => {
           })
           .sort((a, b) => b.likes - a.likes)
       );
-
-      setMessage({
-        error: false,
-        text: `Like added to blog "${returnedBlog.title}"`,
-      });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
     } catch (error) {
       setMessage({ error: true, text: "Something went wrong" });
       setTimeout(() => {
