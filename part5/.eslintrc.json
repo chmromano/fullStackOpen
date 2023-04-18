@@ -2,15 +2,16 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "jest/globals": true
+    "jest/globals": true,
+    "cypress/globals": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:import/recommended",
-    "plugin:jest/recommended"
+    "plugin:jest/recommended",
+    "plugin:cypress/recommended"
   ],
-  "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest",
     "ecmaFeatures": {
@@ -18,7 +19,7 @@
     },
     "sourceType": "module"
   },
-  "plugins": ["jest", "react", "sort-keys-fix"],
+  "plugins": ["jest", "react", "sort-keys-fix", "cypress"],
   "rules": {
     "arrow-spacing": ["error", { "after": true, "before": true }],
     "curly": "error",
@@ -41,6 +42,14 @@
     "sort-keys-fix/sort-keys-fix": "warn",
     "react/prop-types": 0
   },
+  "overrides": [
+    {
+      "files": ["*.cy.js"],
+      "rules": {
+        "jest/expect-expect": "off"
+      }
+    }
+  ],
   "settings": {
     "react": {
       "version": "detect"

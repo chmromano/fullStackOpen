@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import blogService from "./../services/blogs";
+import blogService from "../services/blogs";
 
 const LoggedUser = ({ user, setUser, setBlogs, setMessage }) => {
   const handleLogout = () => {

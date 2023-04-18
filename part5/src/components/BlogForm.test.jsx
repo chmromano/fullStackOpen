@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
-import { render, screen } from "@testing-library/react";
 import BlogForm from "./BlogForm";
 import React from "react";
+import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 describe("<BlogForm />", () => {
@@ -15,7 +15,7 @@ describe("<BlogForm />", () => {
     ).container;
   });
 
-  test("calls event handler with correct input data", async () => {
+  test("calls create blog event handler with correct input data", async () => {
     const user = userEvent.setup();
     const showBlogFormButton = container.querySelector(".showBlogFormButton");
     await user.click(showBlogFormButton);
