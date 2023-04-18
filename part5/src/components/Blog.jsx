@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Blog = ({ user, blog, onDelete, onLike }) => {
   const [visible, setVisible] = useState(false);
 
-  const updateLikes = () => {
+  const likeBlog = () => {
     onLike(blog);
   };
 
@@ -26,7 +26,9 @@ const Blog = ({ user, blog, onDelete, onLike }) => {
           <span className="blogUrl">{blog.url}</span>
           <br />
           <span className="blogLikes">{blog.likes}</span>
-          <button onClick={updateLikes}>Like</button>
+          <button className="blogLikeButton" onClick={likeBlog}>
+            Like
+          </button>
           <br />
           {blog.user.username}
           <br />

@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 
 describe("<Blog />", () => {
   let container;
-
+  let mockHandler;
   const blog = {
     _id: "5a422b891b54a676234d17fa",
     author: "Robert C. Martin",
@@ -17,13 +17,14 @@ describe("<Blog />", () => {
   };
 
   beforeEach(() => {
+    mockHandler = jest.fn();
     container = render(
       <Blog
         user={{ username: "test" }}
         blog={blog}
         blogs={[]}
-        setBlogs={jest.fn()}
-        setMessage={jest.fn()}
+        onDelete={jest.fn()}
+        onLike={mockHandler}
       />
     ).container;
   });
@@ -43,7 +44,6 @@ describe("<Blog />", () => {
   test("shows hidden on view button press", async () => {
     const user = userEvent.setup();
     const button = container.querySelector(".blogDetailsButton");
-
     await user.click(button);
 
     const blogContent = screen.findByText(`${blog.title} ${blog.author}`);
@@ -55,5 +55,17 @@ describe("<Blog />", () => {
     expect(hiddenPartOfBlog).toBeDefined();
     expect(url).toBeDefined();
     expect(likes).toBeDefined();
+  });
+
+  test("pressing like button calls event handler", async () => {
+    const user = userEvent.setup();
+    const showHideBtton = container.querySelector(".blogDetailsButton");
+    await user.click(showHideBtton);
+
+    const blogLikeButton = container.querySelector(".blogLikeButton");
+    await user.click(blogLikeButton);
+    await user.click(blogLikeButton);
+
+    expect(mockHandler.mock.calls).toHaveLength(2);
   });
 });
