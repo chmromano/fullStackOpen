@@ -5,6 +5,7 @@ import LoggedUser from "./components/LoggedUser";
 import LoginForm from "./components/LoginForm";
 import Notification from "./components/Notification";
 import blogService from "./services/blogs";
+import loginService from "./services/login";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -30,6 +31,51 @@ const App = () => {
       blogService.setToken(user.token);
     }
   }, []);
+
+  const handleLogin = async (userObject) => {
+    try {
+      const user = await loginService.login(userObject);
+
+      blogService.setToken(user.token);
+      window.localStorage.setItem(
+        "loggedBlogListAppUser",
+        JSON.stringify(user)
+      );
+
+      setUser(user);
+
+      setMessage({ error: false, text: "Successfully logged in" });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    } catch (error) {
+      setMessage({ error: true, text: "Incorrect credentials" });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      window.localStorage.removeItem("loggedBlogListAppUser");
+
+      blogService.setToken(null);
+
+      setUser(null);
+      setBlogs([]);
+
+      setMessage({ error: false, text: "Successfully logged out" });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    } catch (error) {
+      setMessage({ error: true, text: "Incorrect credentials" });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+  };
 
   const handleCreateBlog = async (blogObject) => {
     try {
@@ -126,16 +172,11 @@ const App = () => {
       <Notification message={message} />
 
       {user === null ? (
-        <LoginForm setUser={setUser} setMessage={setMessage} />
+        <LoginForm onLogin={handleLogin} />
       ) : (
         <>
           <h2>Blog list application</h2>
-          <LoggedUser
-            user={user}
-            setUser={setUser}
-            setBlogs={setBlogs}
-            setMessage={setMessage}
-          />
+          <LoggedUser user={user} onLogout={handleLogout} />
           <BlogForm onCreate={handleCreateBlog} blogFormRef={blogFormRef} />
           <BlogList
             user={user}

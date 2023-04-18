@@ -1,39 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import blogService from "../services/blogs";
-import loginService from "../services/login";
 
-const LoginForm = ({ setUser, setMessage }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const LoginForm = ({ onLogin }) => {
+  const emptyUser = { password: "", username: "" };
 
-  const handleLogin = async (event) => {
+  const [user, setUser] = useState(emptyUser);
+
+  const handleLogin = (event) => {
     event.preventDefault();
 
-    try {
-      const user = await loginService.login({
-        password,
-        username,
-      });
-      blogService.setToken(user.token);
-      window.localStorage.setItem(
-        "loggedBlogListAppUser",
-        JSON.stringify(user)
-      );
-      setUser(user);
-      setUsername("");
-      setPassword("");
+    onLogin(user);
 
-      setMessage({ error: false, text: "Successfully logged in" });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
-    } catch (error) {
-      setMessage({ error: true, text: "Incorrect credentials" });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
-    }
+    setUser(emptyUser);
   };
 
   return (
@@ -44,20 +22,24 @@ const LoginForm = ({ setUser, setMessage }) => {
         <br />
         <input
           type="text"
-          value={username}
+          value={user.username}
           name="username"
           id="username"
-          onChange={({ target }) => setUsername(target.value)}
+          onChange={({ target }) =>
+            setUser({ ...user, username: target.value })
+          }
         />
         <br />
         <label htmlFor="password">Password:</label>
         <br />
         <input
           type="password"
-          value={password}
+          value={user.password}
           name="password"
           id="password"
-          onChange={({ target }) => setPassword(target.value)}
+          onChange={({ target }) =>
+            setUser({ ...user, password: target.value })
+          }
         />
         <br />
         <button type="submit">Login</button>
@@ -67,8 +49,7 @@ const LoginForm = ({ setUser, setMessage }) => {
 };
 
 LoginForm.propTypes = {
-  setMessage: PropTypes.func.isRequired,
-  setUser: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

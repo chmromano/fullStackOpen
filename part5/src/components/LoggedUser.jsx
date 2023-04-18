@@ -1,20 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
-import blogService from "../services/blogs";
 
-const LoggedUser = ({ user, setUser, setBlogs, setMessage }) => {
+const LoggedUser = ({ user, onLogout }) => {
   const handleLogout = () => {
-    window.localStorage.removeItem("loggedBlogListAppUser");
-
-    blogService.setToken(null);
-
-    setUser(null);
-    setBlogs([]);
-
-    setMessage({ error: false, text: "Successfully logged out" });
-    setTimeout(() => {
-      setMessage(null);
-    }, 5000);
+    onLogout();
   };
 
   return (
@@ -29,9 +18,7 @@ const LoggedUser = ({ user, setUser, setBlogs, setMessage }) => {
 };
 
 LoggedUser.propTypes = {
-  setBlogs: PropTypes.func.isRequired,
-  setMessage: PropTypes.func.isRequired,
-  setUser: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
 
