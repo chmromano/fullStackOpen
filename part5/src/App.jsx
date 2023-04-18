@@ -96,12 +96,14 @@ const App = () => {
       });
 
       setBlogs(
-        blogs.map((blog) => {
-          if (blog.id === returnedBlog.id) {
-            blog.likes += 1;
-          }
-          return blog;
-        })
+        blogs
+          .map((blog) => {
+            if (blog.id === returnedBlog.id) {
+              blog.likes += 1;
+            }
+            return blog;
+          })
+          .sort((a, b) => b.likes - a.likes)
       );
 
       setMessage({
