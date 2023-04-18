@@ -1,13 +1,20 @@
 describe("Blog app", function () {
-  const user = {
-    name: "Din Djarin,",
+  const user1 = {
+    name: "Din Djarin",
     password: "thecreed",
     username: "mando",
   };
 
+  const user2 = {
+    name: "Sheev Palpatine",
+    password: "unlimitedpower",
+    username: "the_senate",
+  };
+
   beforeEach(function () {
     cy.request("POST", `${Cypress.env("BACKEND")}/testing/reset`);
-    cy.request("POST", `${Cypress.env("BACKEND")}/users`, user);
+    cy.request("POST", `${Cypress.env("BACKEND")}/users`, user1);
+    cy.request("POST", `${Cypress.env("BACKEND")}/users`, user2);
     cy.visit("");
   });
 
@@ -38,7 +45,7 @@ describe("Blog app", function () {
         .should("contain", "Incorrect credentials")
         .and("have.css", "color", "rgb(255, 0, 0)");
 
-      cy.get("html").should("not.contain", `Logged in as ${user.username}`);
+      cy.get("html").should("not.contain", `Logged in as ${user1.username}`);
     });
   });
 
@@ -51,7 +58,7 @@ describe("Blog app", function () {
     };
 
     beforeEach(function () {
-      cy.login(user).then((value) => (token = value));
+      cy.login(user1).then((value) => (token = value));
     });
 
     it("a blog can be created", function () {
@@ -82,7 +89,7 @@ describe("Blog app", function () {
 
         cy.get(".hiddenBlogDetails")
           .should("contain", blog.url)
-          .and("contain", user.username);
+          .and("contain", user1.username);
       });
 
       it("a blog can be liked", function () {
@@ -93,6 +100,27 @@ describe("Blog app", function () {
         cy.get(".blogLikeButton").click();
 
         cy.get(".blogLikes").contains("1");
+      });
+
+      it("the user who created it can delete it", function () {
+        cy.contains(`${blog.title} ${blog.author}`);
+
+        cy.get(".blogDetailsButton").click();
+        cy.get("#blogDeleteButton").click();
+
+        cy.get("html").should("not.contain", `${blog.title} ${blog.author}`);
+      });
+
+      it("other users cannot see the delete button", function () {
+        cy.get("#logoutButton").click();
+
+        cy.login(user2);
+
+        cy.get(".blogDetailsButton").click();
+        cy.get(".hiddenBlogDetails")
+          .should("contain", blog.url)
+          .and("contain", user1.username);
+        cy.get("#blogDeleteButton").should("not.exist");
       });
     });
   });

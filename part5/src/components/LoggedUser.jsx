@@ -11,7 +11,9 @@ const LoggedUser = ({ user, onLogout }) => {
       <p>
         Logged in as {user.username}
         <br />
-        <button onClick={handleLogout}>Logout</button>
+        <button id="logoutButton" onClick={handleLogout}>
+          Logout
+        </button>
       </p>
     </>
   );
