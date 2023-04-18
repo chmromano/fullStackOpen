@@ -1,47 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Togglable from "./Togglable";
-import blogService from "./../services/blogs";
 
-const BlogForm = ({ blogs, setBlogs, user, setMessage }) => {
-  const [blog, setBlog] = useState({ author: "", title: "", url: "" });
+const BlogForm = ({ createBlog, blogFormRef }) => {
+  const emptyBlog = { author: "", title: "", url: "" };
 
-  const blogFormRef = useRef();
+  const [blog, setBlog] = useState(emptyBlog);
 
   const addBlog = async (event) => {
     event.preventDefault();
 
-    try {
-      const response = await blogService.create(blog);
+    createBlog(blog);
 
-      const blogToSave = {
-        ...response,
-        user: {
-          id: response.user,
-          name: user.name,
-          username: user.username,
-        },
-      };
-
-      setBlogs(blogs.concat(blogToSave));
-
-      blogFormRef.current.toggleVisibility();
-
-      setMessage({
-        error: false,
-        text: `Successfully added blog "${blog.title}" by ${blog.author}`,
-      });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
-
-      setBlog({ author: "", title: "", url: "" });
-    } catch (error) {
-      setMessage({ error: true, text: "Something went wrong" });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
-    }
+    setBlog(emptyBlog);
   };
 
   return (

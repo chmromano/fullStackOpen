@@ -67,11 +67,14 @@ const Blog = ({ user, blog, blogs, setBlogs, setMessage }) => {
   return (
     <div className="blog">
       {statefulBlog.title} {statefulBlog.author}
-      <button onClick={() => setVisible(!visible)}>
+      <button
+        className="blogDetailsButton"
+        onClick={() => setVisible(!visible)}
+      >
         {visible ? "Hide" : "View"}
       </button>
       {visible ? (
-        <div className="hiddenPartOfBlog">
+        <div className="hiddenBlogDetails">
           <span className="blogUrl">{statefulBlog.url}</span>
           <br />
           <span className="blogLikes">{statefulBlog.likes}</span>

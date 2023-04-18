@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BlogForm from "./components/BlogForm";
 import BlogList from "./components/BlogList";
 import LoggedUser from "./components/LoggedUser";
@@ -10,6 +10,8 @@ const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState(null);
+
+  const blogFormRef = useRef();
 
   useEffect(() => {
     if (user !== null) {
@@ -29,6 +31,35 @@ const App = () => {
     }
   }, []);
 
+  const addBlog = async (blogObject) => {
+    try {
+      const returnedBlog = await blogService.create(blogObject);
+      setBlogs(
+        blogs.concat({
+          ...returnedBlog,
+          user: {
+            name: user.name,
+            username: user.username,
+          },
+        })
+      );
+      blogFormRef.current.toggleVisibility();
+
+      setMessage({
+        error: false,
+        text: `Successfully added blog "${returnedBlog.title}" by ${returnedBlog.author}`,
+      });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    } catch (error) {
+      setMessage({ error: true, text: "Something went wrong" });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+  };
+
   return (
     <>
       <Notification message={message} />
@@ -44,12 +75,7 @@ const App = () => {
             setBlogs={setBlogs}
             setMessage={setMessage}
           />
-          <BlogForm
-            blogs={blogs}
-            setBlogs={setBlogs}
-            user={user}
-            setMessage={setMessage}
-          />
+          <BlogForm createBlog={addBlog} blogFormRef={blogFormRef} />
           <BlogList
             user={user}
             blogs={blogs}

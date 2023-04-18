@@ -2,8 +2,11 @@ import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
 import Blog from "./Blog";
 import React from "react";
+import userEvent from "@testing-library/user-event";
 
-test("renders content", () => {
+describe("<Blog />", () => {
+  let container;
+
   const blog = {
     _id: "5a422b891b54a676234d17fa",
     author: "Robert C. Martin",
@@ -13,24 +16,44 @@ test("renders content", () => {
     user: { username: "test" },
   };
 
-  const { container } = render(
-    <Blog
-      user={{ username: "test" }}
-      blog={blog}
-      blogs={[]}
-      setBlogs={jest.fn()}
-      setMessage={jest.fn()}
-    />
-  );
+  beforeEach(() => {
+    container = render(
+      <Blog
+        user={{ username: "test" }}
+        blog={blog}
+        blogs={[]}
+        setBlogs={jest.fn()}
+        setMessage={jest.fn()}
+      />
+    ).container;
+  });
 
-  const content = screen.findByText(`${blog.title} ${blog.author}`);
-  const hiddenPartOfBlog = container.querySelector(".hiddenPartOfBlog");
-  const url = container.querySelector(".blogUrl");
-  const likes = container.querySelector(".blogLikes");
+  test("renders blog content, hides hidden by default", () => {
+    const blogContent = screen.findByText(`${blog.title} ${blog.author}`);
+    const hiddenPartOfBlog = container.querySelector(".hiddenBlogDetails");
+    const url = container.querySelector(".blogUrl");
+    const likes = container.querySelector(".blogLikes");
 
-  expect(content).toBeDefined();
+    expect(blogContent).toBeDefined();
+    expect(hiddenPartOfBlog).toBeNull();
+    expect(url).toBeNull();
+    expect(likes).toBeNull();
+  });
 
-  expect(hiddenPartOfBlog).toBeNull();
-  expect(url).toBeNull();
-  expect(likes).toBeNull();
+  test("shows hidden on view button press", async () => {
+    const user = userEvent.setup();
+    const button = container.querySelector(".blogDetailsButton");
+
+    await user.click(button);
+
+    const blogContent = screen.findByText(`${blog.title} ${blog.author}`);
+    const hiddenPartOfBlog = container.querySelector(".hiddenBlogDetails");
+    const url = container.querySelector(".blogUrl");
+    const likes = container.querySelector(".blogLikes");
+
+    expect(blogContent).toBeDefined();
+    expect(hiddenPartOfBlog).toBeDefined();
+    expect(url).toBeDefined();
+    expect(likes).toBeDefined();
+  });
 });
