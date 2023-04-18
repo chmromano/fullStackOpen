@@ -31,7 +31,7 @@ const App = () => {
     }
   }, []);
 
-  const addBlog = async (blogObject) => {
+  const handleCreateBlog = async (blogObject) => {
     try {
       const returnedBlog = await blogService.create(blogObject);
       setBlogs(
@@ -60,6 +60,65 @@ const App = () => {
     }
   };
 
+  const handleDeleteBlog = async (blogObject) => {
+    try {
+      if (
+        window.confirm(
+          `Deleting "${blogObject.title}" by ${blogObject.author}. Confirm?`
+        )
+      ) {
+        await blogService.remove(blogObject.id);
+
+        setBlogs(blogs.filter((blog) => blog.id !== blogObject.id));
+
+        setMessage({
+          error: false,
+          text: `Blog "${blogObject.title}" deleted`,
+        });
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
+      }
+    } catch (error) {
+      setMessage({ error: true, text: "Something went wrong" });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+  };
+
+  const handleLikeBlog = async (blogObject) => {
+    try {
+      const returnedBlog = await blogService.update(blogObject.id, {
+        ...blogObject,
+        likes: blogObject.likes + 1,
+        user: blogObject.user.id,
+      });
+
+      setBlogs(
+        blogs.map((blog) => {
+          if (blog.id === returnedBlog.id) {
+            blog.likes += 1;
+          }
+          return blog;
+        })
+      );
+
+      setMessage({
+        error: false,
+        text: `Like added to blog "${returnedBlog.title}"`,
+      });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    } catch (error) {
+      setMessage({ error: true, text: "Something went wrong" });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+  };
+
   return (
     <>
       <Notification message={message} />
@@ -75,12 +134,12 @@ const App = () => {
             setBlogs={setBlogs}
             setMessage={setMessage}
           />
-          <BlogForm createBlog={addBlog} blogFormRef={blogFormRef} />
+          <BlogForm onCreate={handleCreateBlog} blogFormRef={blogFormRef} />
           <BlogList
             user={user}
             blogs={blogs}
-            setBlogs={setBlogs}
-            setMessage={setMessage}
+            onDelete={handleDeleteBlog}
+            onLike={handleLikeBlog}
           />
         </>
       )}

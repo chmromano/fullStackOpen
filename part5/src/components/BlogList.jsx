@@ -2,7 +2,7 @@ import Blog from "./Blog";
 import PropTypes from "prop-types";
 import React from "react";
 
-const BlogList = ({ user, blogs, setBlogs, setMessage }) => {
+const BlogList = ({ user, blogs, onDelete, onLike }) => {
   return (
     <>
       <h2>Blogs</h2>
@@ -11,9 +11,8 @@ const BlogList = ({ user, blogs, setBlogs, setMessage }) => {
           key={blog.id}
           user={user}
           blog={blog}
-          blogs={blogs}
-          setBlogs={setBlogs}
-          setMessage={setMessage}
+          onDelete={onDelete}
+          onLike={onLike}
         />
       ))}
     </>
@@ -22,8 +21,8 @@ const BlogList = ({ user, blogs, setBlogs, setMessage }) => {
 
 BlogList.propTypes = {
   blogs: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setBlogs: PropTypes.func.isRequired,
-  setMessage: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onLike: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
 

@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Togglable from "./Togglable";
 
-const BlogForm = ({ createBlog, blogFormRef }) => {
+const BlogForm = ({ onCreate, blogFormRef }) => {
   const emptyBlog = { author: "", title: "", url: "" };
 
   const [blog, setBlog] = useState(emptyBlog);
 
-  const addBlog = async (event) => {
+  const addBlog = (event) => {
     event.preventDefault();
 
-    createBlog(blog);
+    onCreate(blog);
 
     setBlog(emptyBlog);
   };
@@ -56,10 +56,8 @@ const BlogForm = ({ createBlog, blogFormRef }) => {
 };
 
 BlogForm.propTypes = {
-  blogs: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setBlogs: PropTypes.func.isRequired,
-  setMessage: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  blogFormRef: PropTypes.object.isRequired,
+  onCreate: PropTypes.func.isRequired,
 };
 
 export default BlogForm;
