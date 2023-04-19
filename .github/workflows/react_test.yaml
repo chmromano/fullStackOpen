@@ -1,0 +1,25 @@
+name: Test React fullStackOpen exercises
+
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Test ${{ matrix.test_dirs }}
+
+    runs-on: self-hosted
+
+    strategy:
+      matrix: { test_dirs: ["part5"] }
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Install dependencies for ${{ matrix.test_dirs }}
+        run: npm ci
+        working-directory: ${{ matrix.test_dirs }}
+      - name: Test ${{ matrix.test_dirs }}
+        run: npm test
+        working-directory: ${{ matrix.test_dirs }}

@@ -1,20 +1,20 @@
-name: Build fullStackOpen exercises
+name: Build React fullStackOpen exercises
 
-on: [push, pull_request]
+on: pull_request
 
 permissions:
   contents: read
 
 jobs:
   build:
-    name: Build exercise ${{ matrix.directories }}
+    name: Build ${{ matrix.build_dirs }}
 
     runs-on: self-hosted
 
     strategy:
       matrix:
         {
-          directories:
+          build_dirs:
             [
               "part1/anecdotes",
               "part1/courseinfo",
@@ -29,9 +29,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - name: Install dependencies for ${{ matrix.directories }}
+      - name: Install dependencies for ${{ matrix.build_dirs }}
         run: npm ci
-        working-directory: ${{ matrix.directories }}
-      - name: Build ${{ matrix.directories }}
-        run: npm run build --if-present
-        working-directory: ${{ matrix.directories }}
+        working-directory: ${{ matrix.build_dirs }}
+      - name: Build ${{ matrix.build_dirs }}
+        run: npm run build
+        working-directory: ${{ matrix.build_dirs }}

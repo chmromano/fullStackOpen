@@ -1,0 +1,28 @@
+name: Lint and test NodeJS fullStackOpen exercises
+
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Lint and test ${{ matrix.test_dirs }}
+
+    runs-on: self-hosted
+
+    strategy:
+      matrix: { test_dirs: ["part4"] }
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Install dependencies for ${{ matrix.test_dirs }}
+        run: npm ci
+        working-directory: ${{ matrix.test_dirs }}
+      - name: Lint ${{ matrix.test_dirs }}
+        run: npm run lint
+        working-directory: ${{ matrix.test_dirs }}
+    #   - name: Run ${{ matrix.test_dirs }} tests
+    #     run: npm test --verbose --maxWorkers=1
+    #     working-directory: ${{ matrix.test_dirs }}
