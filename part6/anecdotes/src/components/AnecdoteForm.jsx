@@ -16,7 +16,7 @@ const AnecdoteForm = () => {
 
     dispatch(createAnecdote(content));
 
-    dispatch(setMessage(`Note "${content}" successfully added`));
+    dispatch(setMessage(`Anecdote "${content}" successfully added`));
     setTimeout(() => {
       dispatch(removeMessage());
     }, 5000);
