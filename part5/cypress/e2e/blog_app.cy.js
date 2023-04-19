@@ -50,7 +50,6 @@ describe("Blog app", function () {
   });
 
   describe("When logged in", function () {
-    let token;
     const blog = {
       author: "Cypress",
       title: "A blog created by Cypress",
@@ -58,7 +57,7 @@ describe("Blog app", function () {
     };
 
     beforeEach(function () {
-      cy.login(user1).then((value) => (token = value));
+      cy.login(user1);
     });
 
     it("a blog can be created", function () {
@@ -82,7 +81,7 @@ describe("Blog app", function () {
 
     describe("When a blog is created", function () {
       beforeEach(function () {
-        cy.createBlog(blog, token);
+        cy.createBlog(blog);
       });
 
       it("blog details can be shown", function () {
@@ -150,7 +149,7 @@ describe("Blog app", function () {
           },
         ];
 
-        cy.wrap(blogs).each((blog) => cy.createBlog(blog, token));
+        cy.wrap(blogs).each((blog) => cy.createBlog(blog));
 
         cy.get(".blogDetailsButton").each((button) => cy.wrap(button).click());
       });

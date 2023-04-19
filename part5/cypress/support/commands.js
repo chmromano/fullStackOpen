@@ -31,20 +31,23 @@ Cypress.Commands.add("login", (user) => {
         "loggedBlogAppUser",
         JSON.stringify(response.body)
       );
-      cy.visit("");
 
-      return cy.wrap(response.body);
+      cy.visit("");
     }
   );
 });
 
-Cypress.Commands.add("createBlog", (blog, token) => {
+Cypress.Commands.add("createBlog", (blog) => {
   cy.request({
     body: blog,
     headers: {
-      authorization: `Bearer ${token.token}`,
+      authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("loggedBlogAppUser")).token
+      }`,
     },
     method: "POST",
     url: `${Cypress.env("BACKEND")}/blogs`,
-  }).then(() => cy.visit(""));
+  });
+
+  cy.visit("");
 });
