@@ -32,3 +32,9 @@
 - [x] helper functions and unit tests
 - [x] blog list tests
 - [x] blog list expansions
+
+### Part 4
+
+- [x] blog list frontend
+- [x] blog list tests
+- [x] bloglist end to end testing
