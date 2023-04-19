@@ -9,7 +9,7 @@ jobs:
   build:
     name: Test ${{ matrix.test_dirs }}
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     strategy:
       matrix: { test_dirs: ["part5"] }

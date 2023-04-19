@@ -9,7 +9,7 @@ jobs:
   build:
     name: Lint and test ${{ matrix.test_dirs }}
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     strategy:
       matrix: { test_dirs: ["part4"] }
