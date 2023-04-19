@@ -44,3 +44,6 @@
 ### Part 6
 
 - [ ] unicafe revisited
+- [ ] anecdotes
+- [ ] better anecdotes
+- [ ] anecdotes and the backend
