@@ -1,4 +1,4 @@
-name: Test React fullStackOpen exercises
+name: Lint and test NodeJS fullStackOpen exercises
 
 on: pull_request
 
@@ -7,12 +7,12 @@ permissions:
 
 jobs:
   build:
-    name: Test ${{ matrix.test_dirs }}
+    name: Node project ${{ matrix.test_dirs }}
 
     runs-on: ubuntu-latest
 
     strategy:
-      matrix: { test_dirs: ["part5"] }
+      matrix: { test_dirs: ["part4"] }
 
     steps:
       - uses: actions/checkout@v3
@@ -20,6 +20,9 @@ jobs:
       - name: Install dependencies for ${{ matrix.test_dirs }}
         run: npm ci
         working-directory: ${{ matrix.test_dirs }}
-      - name: Test ${{ matrix.test_dirs }}
-        run: npm test
+      - name: Lint ${{ matrix.test_dirs }}
+        run: npm run lint
         working-directory: ${{ matrix.test_dirs }}
+    #   - name: Run ${{ matrix.test_dirs }} tests
+    #     run: npm test --verbose --maxWorkers=1
+    #     working-directory: ${{ matrix.test_dirs }}

@@ -1,4 +1,4 @@
-name: Build React fullStackOpen exercises
+name: Build and test React fullStackOpen exercises
 
 on: pull_request
 
@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   build:
-    name: Build ${{ matrix.build_dirs }}
+    name: React project ${{ matrix.build_dirs }}
 
     runs-on: ubuntu-latest
 
@@ -24,6 +24,7 @@ jobs:
               "part2/phonebook",
               "part5",
             ],
+          test_dirs: ["part5"],
         }
 
     steps:
@@ -35,3 +36,6 @@ jobs:
       - name: Build ${{ matrix.build_dirs }}
         run: npm run build
         working-directory: ${{ matrix.build_dirs }}
+      - name: Test ${{ matrix.test_dirs }}
+        run: npm test
+        working-directory: ${{ matrix.test_dirs }}
