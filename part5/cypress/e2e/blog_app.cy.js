@@ -77,6 +77,7 @@ describe("Blog app", function () {
         )
         .and("have.css", "color", "rgb(0, 128, 0)");
       cy.contains(`${blog.title} ${blog.author}`);
+      cy.get(".hiddenBlogDetails").should("not.exist");
     });
 
     describe("When a blog is created", function () {
@@ -121,6 +122,68 @@ describe("Blog app", function () {
           .should("contain", blog.url)
           .and("contain", user1.username);
         cy.get("#blogDeleteButton").should("not.exist");
+      });
+    });
+
+    describe("When multiple blogs are present", function () {
+      let blogs;
+
+      beforeEach(function () {
+        blogs = [
+          {
+            author: "firstAuthor",
+            likes: 0,
+            title: "firstTitle",
+            url: "firstUrl",
+          },
+          {
+            author: "secondAuthor",
+            likes: 0,
+            title: "secondTitle",
+            url: "secondUrl",
+          },
+          {
+            author: "thirdAuthor",
+            likes: 0,
+            title: "thirdTitle",
+            url: "thirdUrl",
+          },
+        ];
+
+        cy.wrap(blogs).each((blog) => cy.createBlog(blog, token));
+
+        cy.get(".blogDetailsButton").each((button) => cy.wrap(button).click());
+      });
+
+      it("blogs are sorted by likes descending", function () {
+        /*
+        This works because as of ES2019 (ES10) sort is stable.
+        */
+
+        const indexByTitle = (title) => {
+          return blogs.findIndex((blog) => blog.title === title);
+        };
+
+        cy.wrap(Array(20)).each(() => {
+          const rand = Math.floor(Math.random() * 3);
+
+          const title = blogs[rand].title;
+          const author = blogs[rand].author;
+
+          cy.contains(`${title} ${author}`).find(".blogLikeButton").click();
+          blogs[indexByTitle(title)].likes++;
+          blogs = blogs.sort((a, b) => b.likes - a.likes);
+
+          cy.get(".blog")
+            .eq(0)
+            .should("contain", `${blogs[0].title} ${blogs[0].author}`);
+          cy.get(".blog")
+            .eq(1)
+            .should("contain", `${blogs[1].title} ${blogs[1].author}`);
+          cy.get(".blog")
+            .eq(2)
+            .should("contain", `${blogs[2].title} ${blogs[2].author}`);
+        });
       });
     });
   });

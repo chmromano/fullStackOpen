@@ -144,7 +144,7 @@ const App = () => {
         blogs
           .map((blog) => {
             if (blog.id === returnedBlog.id) {
-              blog.likes += 1;
+              blog.likes++;
             }
             return blog;
           })

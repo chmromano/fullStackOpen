@@ -38,17 +38,6 @@ Cypress.Commands.add("login", (user) => {
   );
 });
 
-Cypress.Commands.add("logout", (blog, token) => {
-  cy.request({
-    body: blog,
-    headers: {
-      authorization: `Bearer ${token.token}`,
-    },
-    method: "POST",
-    url: `${Cypress.env("BACKEND")}/blogs`,
-  }).then(() => cy.visit(""));
-});
-
 Cypress.Commands.add("createBlog", (blog, token) => {
   cy.request({
     body: blog,
