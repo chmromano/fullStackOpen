@@ -16,7 +16,7 @@ const AnecdoteList = () => {
         <div key={anecdote.id}>
           <div>{anecdote.content}</div>
           <div>
-            has {anecdote.votes}
+            {`- has ${anecdote.votes} vote${anecdote.votes === 1 ? "" : "s"} `}
             <button onClick={() => dispatch(vote(anecdote.id))}>vote</button>
           </div>
         </div>
