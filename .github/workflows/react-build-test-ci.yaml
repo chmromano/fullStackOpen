@@ -1,0 +1,28 @@
+name: Build and test React fullStackOpen exercises
+
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: React project ${{ matrix.directories }}
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix: { directories: ["part5"] }
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Install dependencies for ${{ matrix.directories }}
+        run: npm ci
+        working-directory: ${{ matrix.directories }}
+      - name: Build ${{ matrix.directories }}
+        run: npm run build
+        working-directory: ${{ matrix.directories }}
+      - name: Test ${{ matrix.directories }}
+        run: npm test
+        working-directory: ${{ matrix.directories }}

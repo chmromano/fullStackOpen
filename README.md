@@ -22,6 +22,8 @@
 
 ### Part 3 (submodule, [separate repository](https://github.com/chmromano/fullStackOpen-Part3))
 
+#### Link to fly.io deployment: <https://floral-tree-1449.fly.dev>
+
 - [x] phonebook backend
 - [x] phonebook database
 - [x] lint configuration
@@ -32,3 +34,9 @@
 - [x] helper functions and unit tests
 - [x] blog list tests
 - [x] blog list expansions
+
+### Part 4
+
+- [x] blog list frontend
+- [x] blog list tests
+- [x] bloglist end to end testing

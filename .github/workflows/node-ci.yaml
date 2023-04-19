@@ -1,15 +1,15 @@
-name: Test fullStackOpen exercises
+name: Lint and test NodeJS fullStackOpen exercises
 
-on: [push, pull_request]
+on: pull_request
 
 permissions:
   contents: read
 
 jobs:
   build:
-    name: Run tests on ${{ matrix.directories }}
+    name: Node project ${{ matrix.directories }}
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     strategy:
       matrix: { directories: ["part4"] }
@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies for ${{ matrix.directories }}
         run: npm ci
         working-directory: ${{ matrix.directories }}
-      - name: Run ESLint on ${{ matrix.directories }}
+      - name: Lint ${{ matrix.directories }}
         run: npm run lint
         working-directory: ${{ matrix.directories }}
     #   - name: Run ${{ matrix.directories }} tests
