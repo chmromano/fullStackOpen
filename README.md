@@ -40,3 +40,7 @@
 - [x] blog list frontend
 - [x] blog list tests
 - [x] bloglist end to end testing
+
+### Part 6
+
+- [ ] unicafe revisited
