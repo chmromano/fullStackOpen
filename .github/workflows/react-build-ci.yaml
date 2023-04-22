@@ -23,6 +23,7 @@ jobs:
               "part2/dataforcountries",
               "part2/phonebook",
               "part6/anecdotes-redux",
+              "part6/query-anecdotes",
             ],
         }
 
