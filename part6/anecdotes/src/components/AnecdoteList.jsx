@@ -2,7 +2,7 @@ import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { vote } from "../reducers/anecdoteReducer";
+import { voteAnecdote } from "../reducers/anecdoteReducer";
 import { setMessage, removeMessage } from "../reducers/notificationReducer";
 
 const AnecdoteList = () => {
@@ -12,7 +12,7 @@ const AnecdoteList = () => {
   });
 
   const handleVote = (anecdote) => {
-    dispatch(vote(anecdote.id));
+    dispatch(voteAnecdote(anecdote));
 
     dispatch(setMessage(`Liked "${anecdote.content}"`));
     setTimeout(() => {
