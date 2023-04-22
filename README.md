@@ -4,9 +4,9 @@
 
 ### Part 0
 
-- [x] 0.4: new note diagram
-- [x] 0.5: single page app diagram
-- [x] 0.6: new note in Single page app diagram
+- [x] new note diagram
+- [x] single page app diagram
+- [x] new note in Single page app diagram
 
 ### Part 1
 
@@ -40,3 +40,11 @@
 - [x] blog list frontend
 - [x] blog list tests
 - [x] bloglist end to end testing
+
+### Part 6
+
+- [x] unicafe revisited
+- [x] anecdotes
+- [x] better anecdotes
+- [x] anecdotes and the backend
+- [x] query anecdotes

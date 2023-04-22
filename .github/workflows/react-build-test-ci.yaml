@@ -12,17 +12,20 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      matrix: { directories: ["part5"] }
+      matrix: { directories: ["part5", "part6/unicafe-redux"] }
 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+
       - name: Install dependencies for ${{ matrix.directories }}
         run: npm ci
         working-directory: ${{ matrix.directories }}
+
       - name: Build ${{ matrix.directories }}
-        run: npm run build
+        run: npm run build --if-present
         working-directory: ${{ matrix.directories }}
+
       - name: Test ${{ matrix.directories }}
         run: npm test
         working-directory: ${{ matrix.directories }}

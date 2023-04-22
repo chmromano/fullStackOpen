@@ -17,12 +17,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+
       - name: Install dependencies for ${{ matrix.directories }}
         run: npm ci
         working-directory: ${{ matrix.directories }}
+
       - name: Lint ${{ matrix.directories }}
         run: npm run lint
         working-directory: ${{ matrix.directories }}
-    #   - name: Run ${{ matrix.directories }} tests
-    #     run: npm test --verbose --maxWorkers=1
-    #     working-directory: ${{ matrix.directories }}

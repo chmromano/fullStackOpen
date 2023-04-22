@@ -22,15 +22,19 @@ jobs:
               "part2/courseinfo",
               "part2/dataforcountries",
               "part2/phonebook",
+              "part6/anecdotes-redux",
+              "part6/query-anecdotes",
             ],
         }
 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+
       - name: Install dependencies for ${{ matrix.directories }}
         run: npm ci
         working-directory: ${{ matrix.directories }}
+
       - name: Build ${{ matrix.directories }}
-        run: npm run build
+        run: npm run build --if-present
         working-directory: ${{ matrix.directories }}
