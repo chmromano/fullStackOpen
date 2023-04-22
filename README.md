@@ -47,4 +47,4 @@
 - [x] anecdotes
 - [x] better anecdotes
 - [x] anecdotes and the backend
-- [ ] query anecdotes
+- [x] query anecdotes
