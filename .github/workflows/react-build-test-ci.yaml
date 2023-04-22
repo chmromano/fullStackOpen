@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      matrix: { directories: ["part5", "part6/unicaferevisited"] }
+      matrix: { directories: ["part5", "part6/unicafe-redux"] }
 
     steps:
       - uses: actions/checkout@v3

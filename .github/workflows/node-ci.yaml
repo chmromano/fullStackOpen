@@ -25,7 +25,3 @@ jobs:
       - name: Lint ${{ matrix.directories }}
         run: npm run lint
         working-directory: ${{ matrix.directories }}
-
-    #   - name: Run ${{ matrix.directories }} tests
-    #     run: npm test --verbose --maxWorkers=1
-    #     working-directory: ${{ matrix.directories }}

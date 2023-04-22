@@ -22,6 +22,7 @@ jobs:
               "part2/courseinfo",
               "part2/dataforcountries",
               "part2/phonebook",
+              "part6/anecdotes-redux",
             ],
         }
 
