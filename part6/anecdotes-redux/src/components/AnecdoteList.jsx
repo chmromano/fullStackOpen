@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { voteAnecdote } from "../reducers/anecdoteReducer";
-import { setMessage, removeMessage } from "../reducers/notificationReducer";
+import { setNotification } from "../reducers/notificationReducer";
 
 const AnecdoteList = () => {
   const dispatch = useDispatch();
@@ -13,11 +13,7 @@ const AnecdoteList = () => {
 
   const handleVote = (anecdote) => {
     dispatch(voteAnecdote(anecdote));
-
-    dispatch(setMessage(`Liked "${anecdote.content}"`));
-    setTimeout(() => {
-      dispatch(removeMessage());
-    }, 5000);
+    dispatch(setNotification(`You voted '${anecdote.content}'`, 5000));
   };
 
   return (
