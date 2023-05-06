@@ -48,3 +48,11 @@
 - [x] better anecdotes
 - [x] anecdotes and the backend
 - [x] query anecdotes
+
+### Part 7
+
+- [ ] routed anecdotes
+- [ ] anecdotes and hooks
+- [ ] country hook
+- [ ] ultimate hooks
+- [ ] extending the bloglist
