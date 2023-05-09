@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import useField from "../hooks/useField";
 
 const CreateNew = ({ addNew }) => {
-  const content = useField("content");
-  const author = useField("author");
-  const info = useField("info");
+  const content = useField("text");
+  const author = useField("text");
+  const info = useField("text");
 
   const navigate = useNavigate();
 
@@ -18,6 +18,13 @@ const CreateNew = ({ addNew }) => {
       votes: 0,
     });
     navigate("/");
+  };
+
+  const handleReset = (event) => {
+    event.preventDefault();
+    content.reset();
+    author.reset();
+    info.reset();
   };
 
   return (
@@ -36,7 +43,8 @@ const CreateNew = ({ addNew }) => {
           Url for more info:
           <input {...info} />
         </div>
-        <button>create</button>
+        <button>Create</button>
+        <button onClick={handleReset}>Reset</button>
       </form>
     </>
   );

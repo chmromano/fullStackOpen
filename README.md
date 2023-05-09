@@ -51,7 +51,7 @@
 
 ### Part 7
 
-- [ ] routed anecdotes
+- [x] routed anecdotes
 - [ ] anecdotes and hooks
 - [ ] country hook
 - [ ] ultimate hooks
