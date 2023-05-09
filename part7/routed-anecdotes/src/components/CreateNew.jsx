@@ -1,18 +1,22 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateNew = ({ addNew }) => {
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
   const [info, setInfo] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addNew.addNew({
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    addNew({
       content,
       author,
       info,
       votes: 0,
     });
+    navigate("/");
   };
 
   return (

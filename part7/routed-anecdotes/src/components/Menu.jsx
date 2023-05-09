@@ -7,7 +7,7 @@ const Menu = () => {
   };
 
   return (
-    <>
+    <div>
       <Link style={padding} to="/">
         Anecdotes
       </Link>
@@ -17,7 +17,7 @@ const Menu = () => {
       <Link style={padding} to="/about">
         About
       </Link>
-    </>
+    </div>
   );
 };
 
