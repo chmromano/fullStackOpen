@@ -52,9 +52,7 @@ const App = () => {
   };
 
   const match = useMatch("/anecdotes/:id");
-  const anecdote = match
-    ? anecdotes.find((anecdote) => anecdote.id === Number(match.params.id))
-    : null;
+  const anecdote = match ? anecdoteById(Number(match.params.id)) : null;
 
   return (
     <>
