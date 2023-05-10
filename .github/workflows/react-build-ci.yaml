@@ -25,6 +25,8 @@ jobs:
               "part6/anecdotes-redux",
               "part6/query-anecdotes",
               "part7/routed-anecdotes",
+              "part7/country-hook",
+              "part7/ultimate-hooks",
             ],
         }
 

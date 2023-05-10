@@ -52,7 +52,7 @@
 ### Part 7
 
 - [x] routed anecdotes
-- [ ] anecdotes and hooks
-- [ ] country hook
+- [x] anecdotes and hooks
+- [x] country hook
 - [ ] ultimate hooks
 - [ ] extending the bloglist

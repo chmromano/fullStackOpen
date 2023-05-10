@@ -57,7 +57,7 @@ const Country = ({ country }) => {
   }
 
   if (!country.found) {
-    return <div>not found...</div>;
+    return <>not found...</>;
   }
 
   return (
