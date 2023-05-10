@@ -18,7 +18,35 @@ const useField = (type) => {
 const useCountry = (name) => {
   const [country, setCountry] = useState(null);
 
-  useEffect(() => {});
+  useEffect(() => {
+    const fetchCountry = async () => {
+      if (name === "") {
+        setCountry(null);
+        return;
+      }
+
+      try {
+        const url = `https://restcountries.com/v3.1/name/${name}?fullText=true&fields=name,capital,flags,population`;
+        const response = await axios.get(url);
+
+        const object = {
+          found: response.status === 200,
+          data: {
+            name: response.data[0].name.common,
+            capital: response.data[0].capital[0],
+            population: response.data[0].population,
+            flag: response.data[0].flags.svg,
+          },
+        };
+
+        setCountry(object);
+      } catch (error) {
+        setCountry({ found: false });
+      }
+    };
+
+    fetchCountry();
+  }, [name]);
 
   return country;
 };
@@ -33,7 +61,7 @@ const Country = ({ country }) => {
   }
 
   return (
-    <div>
+    <>
       <h3>{country.data.name} </h3>
       <div>capital {country.data.capital} </div>
       <div>population {country.data.population}</div>
@@ -42,7 +70,7 @@ const Country = ({ country }) => {
         height="100"
         alt={`flag of ${country.data.name}`}
       />
-    </div>
+    </>
   );
 };
 
@@ -51,20 +79,20 @@ const App = () => {
   const [name, setName] = useState("");
   const country = useCountry(name);
 
-  const fetch = (e) => {
-    e.preventDefault();
+  const fetch = (event) => {
+    event.preventDefault();
     setName(nameInput.value);
   };
 
   return (
-    <div>
+    <>
       <form onSubmit={fetch}>
         <input {...nameInput} />
         <button>find</button>
       </form>
 
       <Country country={country} />
-    </div>
+    </>
   );
 };
 
