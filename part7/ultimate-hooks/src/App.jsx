@@ -18,10 +18,19 @@ const useField = (type) => {
 const useResource = (baseUrl) => {
   const [resources, setResources] = useState([]);
 
-  // ...
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(baseUrl);
+      setResources(response.data);
+    };
 
-  const create = (resource) => {
-    // ...
+    fetchData();
+  }, [baseUrl]);
+
+  const create = async (resource) => {
+    const response = await axios.post(baseUrl, resource);
+    const updatedResources = resources.concat(response.data);
+    setResources(updatedResources);
   };
 
   const service = {
@@ -50,7 +59,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <>
       <h2>notes</h2>
       <form onSubmit={handleNoteSubmit}>
         <input {...content} />
@@ -71,7 +80,7 @@ const App = () => {
           {n.name} {n.number}
         </p>
       ))}
-    </div>
+    </>
   );
 };
 
