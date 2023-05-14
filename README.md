@@ -54,5 +54,6 @@
 - [x] routed anecdotes
 - [x] anecdotes and hooks
 - [x] country hook
-- [ ] ultimate hooks
+- [x] ultimate hooks
+- [x] automatic code formatting
 - [ ] extending the bloglist
