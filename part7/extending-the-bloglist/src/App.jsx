@@ -7,13 +7,13 @@ import Notification from "./components/Notification";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 import { useDispatch } from "react-redux";
+import { setNotification } from "./reducers/notificationReducer";
 
 const App = () => {
   const dispatch = useDispatch();
 
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(null);
 
   const blogFormRef = useRef();
 
@@ -38,43 +38,26 @@ const App = () => {
   const handleLogin = async (userObject) => {
     try {
       const user = await loginService.login(userObject);
-
       blogService.setToken(user.token);
       window.localStorage.setItem("loggedBlogAppUser", JSON.stringify(user));
-
       setUser(user);
-
-      setMessage({ error: false, text: "Successfully logged in" });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
+      dispatch(
+        setNotification({ error: false, text: "Successfully logged in" }, 5000)
+      );
     } catch (error) {
-      setMessage({ error: true, text: "Incorrect credentials" });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
+      dispatch(
+        setNotification({ error: true, text: "Something went wrong" }, 5000)
+      );
     }
   };
 
   const handleLogout = async () => {
-    try {
-      window.localStorage.removeItem("loggedBlogAppUser");
+    window.localStorage.removeItem("loggedBlogAppUser");
 
-      blogService.setToken(null);
+    blogService.setToken(null);
 
-      setUser(null);
-      setBlogs([]);
-
-      setMessage({ error: false, text: "Successfully logged out" });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
-    } catch (error) {
-      setMessage({ error: true, text: "Incorrect credentials" });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
-    }
+    setUser(null);
+    setBlogs([]);
   };
 
   const handleCreateBlog = async (blogObject) => {
@@ -93,18 +76,19 @@ const App = () => {
       );
       blogFormRef.current.toggleVisibility();
 
-      setMessage({
-        error: false,
-        text: `Successfully added blog "${returnedBlog.title}" by ${returnedBlog.author}`,
-      });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
+      dispatch(
+        setNotification(
+          {
+            error: false,
+            text: `Successfully added blog "${returnedBlog.title}" by ${returnedBlog.author}`,
+          },
+          5000
+        )
+      );
     } catch (error) {
-      setMessage({ error: true, text: "Something went wrong" });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
+      dispatch(
+        setNotification({ error: true, text: "Something went wrong" }, 5000)
+      );
     }
   };
 
@@ -119,19 +103,20 @@ const App = () => {
 
         setBlogs(blogs.filter((blog) => blog.id !== blogObject.id));
 
-        setMessage({
-          error: false,
-          text: `Blog "${blogObject.title}" deleted`,
-        });
-        setTimeout(() => {
-          setMessage(null);
-        }, 5000);
+        dispatch(
+          setNotification(
+            {
+              error: false,
+              text: `Blog "${blogObject.title}" deleted`,
+            },
+            5000
+          )
+        );
       }
     } catch (error) {
-      setMessage({ error: true, text: "Something went wrong" });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
+      dispatch(
+        setNotification({ error: true, text: "Something went wrong" }, 5000)
+      );
     }
   };
 
@@ -153,17 +138,28 @@ const App = () => {
           })
           .sort((a, b) => b.likes - a.likes)
       );
+
+      dispatch(
+        setNotification(
+          {
+            error: false,
+            text: `Liked blog "${returnedBlog.title}" by ${returnedBlog.author}`,
+          },
+          5000
+        ),
+        5000
+      );
     } catch (error) {
-      setMessage({ error: true, text: "Something went wrong" });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
+      dispatch(
+        setNotification({ error: true, text: "Something went wrong" }, 5000),
+        5000
+      );
     }
   };
 
   return (
     <>
-      <Notification message={message} />
+      <Notification />
 
       {user === null ? (
         <LoginForm onLogin={handleLogin} />

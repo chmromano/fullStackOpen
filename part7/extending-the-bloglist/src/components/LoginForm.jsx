@@ -8,9 +8,7 @@ const LoginForm = ({ onLogin }) => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-
     onLogin(user);
-
     setUser(emptyUser);
   };
 

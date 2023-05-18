@@ -1,9 +1,16 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setNotification } from "../reducers/notificationReducer";
 
 const LoggedUser = ({ user, onLogout }) => {
+  const dispatch = useDispatch();
+
   const handleLogout = () => {
     onLogout();
+    dispatch(
+      setNotification({ error: false, text: "Successfully logged out" }, 5000)
+    );
   };
 
   return (
