@@ -3,12 +3,12 @@
     "browser": true,
     "es2021": true,
     "jest/globals": true,
-    "cypress/globals": true
+    "cypress/globals": true,
+    "node": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:import/recommended",
     "plugin:jest/recommended",
     "plugin:cypress/recommended"
   ],
@@ -16,11 +16,11 @@
     "ecmaVersion": "latest",
     "ecmaFeatures": {
       "jsx": true
-    },
-    "sourceType": "module"
+    }
   },
   "plugins": ["jest", "react", "cypress"],
   "rules": {
+    "no-unused-vars": "error",
     "arrow-spacing": ["error", { "after": true, "before": true }],
     "curly": "error",
     "eqeqeq": "error",
@@ -33,7 +33,6 @@
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
     "react/jsx-filename-extension": 1,
-    "sort-imports": "error",
     "react/prop-types": 0
   },
   "overrides": [
@@ -47,11 +46,6 @@
   "settings": {
     "react": {
       "version": "detect"
-    },
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx"]
-      }
     }
   }
 }

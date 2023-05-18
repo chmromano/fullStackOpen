@@ -1,6 +1,12 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
+
+const options = {
+  extensions: ["js", "jsx"],
+  exclude: ["/node_modules/"],
+};
 
 const config = (env, argv) => {
   console.log(env, argv);
@@ -27,6 +33,7 @@ const config = (env, argv) => {
       new webpack.DefinePlugin({
         BACKEND_URL: JSON.stringify(backend_url),
       }),
+      new ESLintPlugin(options),
     ],
     module: {
       rules: [
