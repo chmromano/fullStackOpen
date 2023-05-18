@@ -40,4 +40,6 @@ const remove = async (id) => {
   return response.data;
 };
 
-export default { create, getAll, remove, setToken, update };
+const blogService = { create, getAll, remove, setToken, update };
+
+export default blogService;
