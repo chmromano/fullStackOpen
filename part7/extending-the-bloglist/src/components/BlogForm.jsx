@@ -1,57 +1,54 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Togglable from "./Togglable";
+import useField from "../hooks/useField";
 
 const BlogForm = ({ onCreate, blogFormRef }) => {
-  const emptyBlog = { author: "", title: "", url: "" };
+  const { reset: resetTitle, ...title } = useField("text");
+  const { reset: resetAuthor, ...author } = useField("text");
+  const { reset: resetUrl, ...url } = useField("text");
 
-  const [blog, setBlog] = useState(emptyBlog);
+  const resetForm = () => {
+    resetTitle();
+    resetAuthor();
+    resetUrl();
+  };
 
   const addBlog = (event) => {
     event.preventDefault();
 
-    onCreate(blog);
+    onCreate({
+      title: title.value,
+      author: author.value,
+      url: url.value,
+    });
 
-    setBlog(emptyBlog);
+    resetForm();
+  };
+
+  const handleReset = (event) => {
+    event.preventDefault();
+    resetForm();
   };
 
   return (
     <Togglable label="Add blog" ref={blogFormRef}>
       <h2>Create new blog</h2>
       <form onSubmit={addBlog}>
-        <label htmlFor="blogTitle">Title:</label>
+        Title:
         <br />
-        <input
-          type="text"
-          value={blog.title}
-          name="title"
-          id="blogTitle"
-          onChange={({ target }) => setBlog({ ...blog, title: target.value })}
-        />
+        <input {...title} />
         <br />
-        <label htmlFor="blogAuthor">Author:</label>
+        Author:
         <br />
-        <input
-          type="text"
-          value={blog.author}
-          name="author"
-          id="blogAuthor"
-          onChange={({ target }) => setBlog({ ...blog, author: target.value })}
-        />
+        <input {...author} />
         <br />
-        <label htmlFor="blogUrl">Url:</label>
+        Url:
         <br />
-        <input
-          type="text"
-          value={blog.url}
-          name="url"
-          id="blogUrl"
-          onChange={({ target }) => setBlog({ ...blog, url: target.value })}
-        />
+        <input {...url} />
         <br />
-        <button className="blogFormSubmitButton" type="submit">
-          Create
-        </button>
+        <button type="submit">Create</button>
+        <button onClick={handleReset}>Reset</button>
       </form>
     </Togglable>
   );

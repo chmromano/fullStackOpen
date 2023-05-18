@@ -18,7 +18,6 @@ jobs:
         directories:
           - part5
           - part6/unicafe-redux
-          - part7/extending-the-bloglist
 
     steps:
       - name: Checkout code

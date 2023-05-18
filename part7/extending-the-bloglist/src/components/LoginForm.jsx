@@ -1,46 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
+import useField from "../hooks/useField";
 
 const LoginForm = ({ onLogin }) => {
-  const emptyUser = { password: "", username: "" };
+  const { reset: resetUsername, ...username } = useField("text");
+  const { reset: resetPassword, ...password } = useField("text");
 
-  const [user, setUser] = useState(emptyUser);
+  const resetForm = () => {
+    resetUsername();
+    resetPassword();
+  };
 
   const handleLogin = (event) => {
     event.preventDefault();
-    onLogin(user);
-    setUser(emptyUser);
+
+    onLogin({ password: password.value, username: username.value });
+
+    resetForm();
+  };
+
+  const handleReset = (event) => {
+    event.preventDefault();
+    resetForm();
   };
 
   return (
     <>
       <h2>Log in to the application</h2>
       <form onSubmit={handleLogin}>
-        <label htmlFor="username">Username:</label>
+        Username:
         <br />
-        <input
-          type="text"
-          value={user.username}
-          name="username"
-          id="username"
-          onChange={({ target }) =>
-            setUser({ ...user, username: target.value })
-          }
-        />
+        <input {...username} />
         <br />
-        <label htmlFor="password">Password:</label>
+        Password:
         <br />
-        <input
-          type="password"
-          value={user.password}
-          name="password"
-          id="password"
-          onChange={({ target }) =>
-            setUser({ ...user, password: target.value })
-          }
-        />
+        <input {...password} />
         <br />
         <button type="submit">Login</button>
+        <button onClick={handleReset}>Reset</button>
       </form>
     </>
   );

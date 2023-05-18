@@ -27,6 +27,7 @@ jobs:
           - part7/routed-anecdotes
           - part7/country-hook
           - part7/ultimate-hooks
+          - part7/extending-the-bloglist
 
     steps:
       - name: Checkout code
