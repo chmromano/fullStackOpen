@@ -1,6 +1,8 @@
 name: Build and test React fullStackOpen exercises
 
-on: pull_request
+on:
+  - push
+  - pull_request
 
 permissions:
   contents: read
@@ -9,18 +11,21 @@ jobs:
   build:
     name: React project ${{ matrix.directories }}
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event_name == 'pull_request' && 'ubuntu-latest' || 'self-hosted' }}
 
     strategy:
       matrix:
-        {
-          directories:
-            ["part5", "part6/unicafe-redux", "part7/extending-the-bloglist"],
-        }
+        directories:
+          - part5
+          - part6/unicafe-redux
+          - part7/extending-the-bloglist
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
 
       - name: Install dependencies for ${{ matrix.directories }}
         run: npm ci

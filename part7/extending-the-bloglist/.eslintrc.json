@@ -19,7 +19,7 @@
     },
     "sourceType": "module"
   },
-  "plugins": ["jest", "react", "sort-keys-fix", "cypress"],
+  "plugins": ["jest", "react", "cypress"],
   "rules": {
     "arrow-spacing": ["error", { "after": true, "before": true }],
     "curly": "error",
@@ -34,12 +34,6 @@
     "semi": ["error", "always"],
     "react/jsx-filename-extension": 1,
     "sort-imports": "error",
-    "sort-keys": [
-      "error",
-      "asc",
-      { "caseSensitive": true, "minKeys": 2, "natural": false }
-    ],
-    "sort-keys-fix/sort-keys-fix": "warn",
     "react/prop-types": 0
   },
   "overrides": [
