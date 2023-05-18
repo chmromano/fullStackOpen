@@ -3,18 +3,23 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
 
-const options = {
-  extensions: ["js", "jsx"],
-  exclude: ["/node_modules/"],
-};
-
 const config = (env, argv) => {
   console.log(env, argv);
 
-  const backend_url =
-    argv.mode === "production"
-      ? "https://notes2023.fly.dev/api/notes"
-      : "http://localhost:3001/notes";
+  const production_mode = argv.mode === "production";
+
+  const options = {
+    extensions: ["js", "jsx"],
+    exclude: ["/node_modules/"],
+    emitError: production_mode,
+    emitWarning: production_mode,
+    failOnError: production_mode,
+    failOnWarning: production_mode,
+  };
+
+  const backend_url = production_mode
+    ? "https://blogs2023.fly.dev"
+    : "http://localhost:3005";
 
   return {
     entry: "./src/index.jsx",

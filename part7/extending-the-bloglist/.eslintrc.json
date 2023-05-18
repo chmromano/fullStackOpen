@@ -47,5 +47,8 @@
     "react": {
       "version": "detect"
     }
+  },
+  "globals": {
+    "BACKEND_URL": true
   }
 }
