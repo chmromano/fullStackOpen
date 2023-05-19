@@ -1,13 +1,20 @@
-import PropTypes from "prop-types";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setNotification } from "../reducers/notificationReducer";
+import { setUser } from "../reducers/userReducer";
+import { clearBlogs } from "../reducers/blogReducer";
+import blogService from "../services/blogs";
 
-const LoggedUser = ({ user, onLogout }) => {
+const LoggedUser = () => {
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    onLogout();
+  const user = useSelector(({ user }) => user);
+
+  const handleLogout = async () => {
+    window.localStorage.removeItem("loggedBlogAppUser");
+    blogService.setToken(null);
+    dispatch(setUser(null));
+    dispatch(clearBlogs());
     dispatch(
       setNotification({ error: false, text: "Successfully logged out" }, 5000)
     );
@@ -24,11 +31,6 @@ const LoggedUser = ({ user, onLogout }) => {
       </p>
     </>
   );
-};
-
-LoggedUser.propTypes = {
-  onLogout: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
 };
 
 export default LoggedUser;

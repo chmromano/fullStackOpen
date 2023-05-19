@@ -1,8 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
 import useField from "../hooks/useField";
+import blogService from "../services/blogs";
+import loginService from "../services/login";
+import { useDispatch } from "react-redux";
+import { setUser } from "../reducers/userReducer";
+import { setNotification } from "../reducers/notificationReducer";
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = () => {
+  const dispatch = useDispatch();
+
   const { reset: resetUsername, ...username } = useField("text");
   const { reset: resetPassword, ...password } = useField("text");
 
@@ -11,10 +17,25 @@ const LoginForm = ({ onLogin }) => {
     resetPassword();
   };
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
-    onLogin({ password: password.value, username: username.value });
+    try {
+      const user = await loginService.login({
+        password: password.value,
+        username: username.value,
+      });
+      blogService.setToken(user.token);
+      window.localStorage.setItem("loggedBlogAppUser", JSON.stringify(user));
+      dispatch(setUser(user));
+      dispatch(
+        setNotification({ error: false, text: "Successfully logged in" }, 5000)
+      );
+    } catch (error) {
+      dispatch(
+        setNotification({ error: true, text: "Something went wrong" }, 5000)
+      );
+    }
 
     resetForm();
   };
@@ -41,10 +62,6 @@ const LoginForm = ({ onLogin }) => {
       </form>
     </>
   );
-};
-
-LoginForm.propTypes = {
-  onLogin: PropTypes.func.isRequired,
 };
 
 export default LoginForm;
