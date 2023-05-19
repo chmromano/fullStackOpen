@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import blogService from "../services/blogs";
 
 const userSlice = createSlice({
   name: "user",
@@ -12,6 +13,17 @@ const userSlice = createSlice({
     },
   },
 });
+
+export const initialiseUser = () => {
+  return (dispatch) => {
+    const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser");
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      dispatch(setUserState(user));
+      blogService.setToken(user.token);
+    }
+  };
+};
 
 export const setUser = (user) => {
   return async (dispatch) => {
