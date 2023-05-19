@@ -6,7 +6,7 @@ import LoginForm from "./components/LoginForm";
 import Notification from "./components/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeBlogs } from "./reducers/blogReducer";
-import { initialiseUser } from "./reducers/userReducer";
+import { initialiseUser } from "./reducers/loginReducer";
 
 const App = () => {
   const dispatch = useDispatch();

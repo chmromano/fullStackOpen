@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotification } from "../reducers/notificationReducer";
-import { setUser } from "../reducers/userReducer";
+import { setUser } from "../reducers/loginReducer";
 import { clearBlogs } from "../reducers/blogReducer";
 import blogService from "../services/blogs";
 
