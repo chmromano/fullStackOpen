@@ -42,7 +42,7 @@ const App = () => {
   const matchedUser = userMatch ? userById(userMatch.params.id) : null;
 
   return (
-    <>
+    <div className="container">
       <Notification />
 
       {user === null ? (
@@ -61,7 +61,7 @@ const App = () => {
           </Routes>
         </>
       )}
-    </>
+    </div>
   );
 };
 

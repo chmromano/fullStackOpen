@@ -1,7 +1,6 @@
 name: Build and test React fullStackOpen exercises
 
 on:
-  - push
   - pull_request
 
 permissions:
@@ -11,7 +10,7 @@ jobs:
   build:
     name: React project ${{ matrix.directories }}
 
-    runs-on: ${{ github.event_name == 'pull_request' && 'ubuntu-latest' || 'self-hosted' }}
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
