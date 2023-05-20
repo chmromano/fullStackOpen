@@ -8,11 +8,15 @@ const BlogList = () => {
   return (
     <>
       <h2>Blogs</h2>
-      {blogs.map((blog) => (
-        <Link key={blog.id} to={`/blogs/${blog.id}`}>
-          {blog.title} {blog.author}
-        </Link>
-      ))}
+      <ul>
+        {blogs.map((blog) => (
+          <li key={blog.id}>
+            <Link to={`/blogs/${blog.id}`}>
+              {blog.title} {blog.author}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </>
   );
 };
