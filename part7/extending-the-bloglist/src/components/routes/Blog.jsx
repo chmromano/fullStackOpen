@@ -2,54 +2,61 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setNotification } from "../../reducers/notificationReducer";
-import { deleteBlog, likeBlog } from "../../reducers/blogReducer";
+import { commentBlog, deleteBlog, likeBlog } from "../../reducers/blogReducer";
+import useField from "../../hooks/useField";
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch();
 
+  const { reset: resetComment, ...comment } = useField("text");
+
   const user = useSelector(({ user }) => user);
 
   const handleDeleteBlog = async () => {
-    try {
-      if (
-        window.confirm(`Deleting "${blog.title}" by ${blog.author}. Confirm?`)
-      ) {
-        dispatch(deleteBlog(blog.id));
+    const promptString = `Deleting "${blog.title}" by ${blog.author}. Confirm?`;
 
-        dispatch(
-          setNotification(
-            {
-              error: false,
-              text: `Blog "${blog.title}" deleted`,
-            },
-            5000
-          )
-        );
-      }
-    } catch (error) {
-      dispatch(
-        setNotification({ error: true, text: "Something went wrong" }, 5000)
-      );
+    if (window.confirm(promptString)) {
+      dispatch(deleteBlog(blog.id));
+
+      const notification = {
+        error: false,
+        text: `Blog "${blog.title}" deleted`,
+      };
+
+      dispatch(setNotification(notification, 5000));
     }
   };
 
   const handleLikeBlog = async () => {
-    try {
-      dispatch(likeBlog(blog));
+    dispatch(likeBlog(blog));
 
-      dispatch(
-        setNotification(
-          {
-            error: false,
-            text: `Liked blog "${blog.title}" by ${blog.author}`,
-          },
-          5000
-        )
-      );
-    } catch (error) {
-      dispatch(
-        setNotification({ error: true, text: "Something went wrong" }, 5000)
-      );
+    const notification = {
+      error: false,
+      text: `Liked blog "${blog.title}" by ${blog.author}`,
+    };
+
+    dispatch(setNotification(notification, 5000));
+  };
+
+  const handleCommentBlog = async (event) => {
+    event.preventDefault();
+
+    if (comment.value === "") {
+      const notification = {
+        error: true,
+        text: "Comment cannot be empty",
+      };
+      dispatch(setNotification(notification, 5000));
+    } else {
+      dispatch(commentBlog(blog.id, comment.value));
+
+      const notification = {
+        error: false,
+        text: `Commented blog "${blog.title}" by ${blog.author}`,
+      };
+      dispatch(setNotification(notification, 5000));
+
+      resetComment();
     }
   };
 
@@ -57,8 +64,10 @@ const Blog = ({ blog }) => {
     return null;
   }
 
+  console.log(blog);
+
   return (
-    <div>
+    <>
       <h2>
         {blog.title} {blog.author}
       </h2>
@@ -77,7 +86,23 @@ const Blog = ({ blog }) => {
           <button onClick={handleDeleteBlog}>Delete</button>
         ) : null}
       </div>
-    </div>
+
+      <br />
+
+      <form onSubmit={handleCommentBlog}>
+        Comment:
+        <input {...comment} />
+        <button type="submit">Comment</button>
+        <button onClick={resetComment}>Reset</button>
+      </form>
+
+      <h3>Comments:</h3>
+      <ul>
+        {blog.comments.map((comment) => (
+          <li key={comment}>{comment}</li>
+        ))}
+      </ul>
+    </>
   );
 };
 

@@ -28,16 +28,15 @@ const LoginForm = () => {
       blogService.setToken(user.token);
       window.localStorage.setItem("loggedBlogAppUser", JSON.stringify(user));
       dispatch(setUser(user));
-      dispatch(
-        setNotification({ error: false, text: "Successfully logged in" }, 5000)
-      );
-    } catch (error) {
-      dispatch(
-        setNotification({ error: true, text: "Something went wrong" }, 5000)
-      );
-    }
 
-    resetForm();
+      const notification = { error: false, text: "Successfully logged in" };
+      dispatch(setNotification(notification, 5000));
+
+      resetForm();
+    } catch (error) {
+      const notification = { error: true, text: "Something went wrong" };
+      dispatch(setNotification(notification, 5000));
+    }
   };
 
   const handleReset = (event) => {

@@ -30,25 +30,15 @@ const BlogForm = ({ blogFormRef }) => {
       url: url.value,
     };
 
-    try {
-      dispatch(createBlog(blog, user));
+    dispatch(createBlog(blog, user));
 
-      blogFormRef.current.toggleVisibility();
+    blogFormRef.current.toggleVisibility();
 
-      dispatch(
-        setNotification(
-          {
-            error: false,
-            text: `Successfully added blog "${blog.title}" by ${blog.author}`,
-          },
-          5000
-        )
-      );
-    } catch (error) {
-      dispatch(
-        setNotification({ error: true, text: "Something went wrong" }, 5000)
-      );
-    }
+    const notification = {
+      error: false,
+      text: `Successfully added blog "${blog.title}" by ${blog.author}`,
+    };
+    dispatch(setNotification(notification, 5000));
 
     resetForm();
   };
