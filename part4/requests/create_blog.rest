@@ -1,4 +1,4 @@
-POST http://localhost:3001/api/blogs HTTP/1.1
+POST http://localhost:3005/api/blogs HTTP/1.1
 content-type: application/json
 authorization: Bearer
 
@@ -11,7 +11,7 @@ authorization: Bearer
 
 ###
 
-POST http://localhost:3001/api/blogs HTTP/1.1
+POST http://localhost:3005/api/blogs HTTP/1.1
 content-type: application/json
 
 {
@@ -23,7 +23,7 @@ content-type: application/json
 
 ###
 
-POST http://localhost:3001/api/blogs HTTP/1.1
+POST http://localhost:3005/api/blogs HTTP/1.1
 content-type: application/json
 
 {
@@ -32,7 +32,7 @@ content-type: application/json
 
 ###
 
-POST http://localhost:3001/api/blogs HTTP/1.1
+POST http://localhost:3005/api/blogs HTTP/1.1
 content-type: application/json
 
 {
@@ -41,7 +41,7 @@ content-type: application/json
 
 ###
 
-POST http://localhost:3001/api/blogs HTTP/1.1
+POST http://localhost:3005/api/blogs HTTP/1.1
 content-type: application/json
 
 {

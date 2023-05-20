@@ -1,6 +1,7 @@
 name: Lint and test NodeJS fullStackOpen exercises
 
-on: pull_request
+on:
+  - pull_request
 
 permissions:
   contents: read
@@ -12,11 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      matrix: { directories: ["part4"] }
+      matrix:
+        directories:
+          - part4
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
 
       - name: Install dependencies for ${{ matrix.directories }}
         run: npm ci

@@ -48,3 +48,12 @@
 - [x] better anecdotes
 - [x] anecdotes and the backend
 - [x] query anecdotes
+
+### Part 7
+
+- [x] routed anecdotes
+- [x] anecdotes and hooks
+- [x] country hook
+- [x] ultimate hooks
+- [x] automatic code formatting
+- [x] extending the bloglist

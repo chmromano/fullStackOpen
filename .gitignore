@@ -154,6 +154,6 @@ Temporary Items
 
 # End of https://www.toptal.com/developers/gitignore/api/cypressio
 
-example_for_course/
+course_example/
 build/
 

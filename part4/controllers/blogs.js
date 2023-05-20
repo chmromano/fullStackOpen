@@ -8,6 +8,28 @@ blogsRouter.get("/", async (request, response) => {
   response.status(200).json(blogs);
 });
 
+blogsRouter.post("/:id/comments", async (request, response) => {
+  const { comment } = request.body;
+
+  if (comment === "") {
+    return response.status(400).json({ error: "empty comment not allowed" });
+  }
+
+  const blog = await Blog.findById(request.params.id);
+
+  if (!blog) {
+    return response.status(404).json({ error: "resource does not exist" });
+  }
+
+  blog.comments.push(comment);
+
+  const updatedBlog = await blog.save();
+
+  updatedBlog
+    ? response.status(200).json(updatedBlog)
+    : response.status(400).json({ error: "something went wrong" });
+});
+
 blogsRouter.post("/", async (request, response) => {
   const { title, author, url, likes } = request.body;
 
