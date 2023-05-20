@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 import { setNotification } from "../../reducers/notificationReducer";
 import { commentBlog, deleteBlog, likeBlog } from "../../reducers/blogReducer";
@@ -7,6 +8,7 @@ import useField from "../../hooks/useField";
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { reset: resetComment, ...comment } = useField("text");
 
@@ -24,6 +26,8 @@ const Blog = ({ blog }) => {
       };
 
       dispatch(setNotification(notification, 5000));
+
+      navigate("/");
     }
   };
 
