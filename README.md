@@ -56,4 +56,4 @@
 - [x] country hook
 - [x] ultimate hooks
 - [x] automatic code formatting
-- [ ] extending the bloglist
+- [x] extending the bloglist
