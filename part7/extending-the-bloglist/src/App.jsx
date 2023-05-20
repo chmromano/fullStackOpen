@@ -1,17 +1,24 @@
 import React, { useEffect, useRef } from "react";
-import BlogForm from "./components/BlogForm";
-import BlogList from "./components/BlogList";
+import { Routes, Route, useMatch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { initializeBlogs } from "./reducers/blogReducer";
+import { initialiseUser } from "./reducers/loginReducer";
+
 import LoggedUser from "./components/LoggedUser";
 import LoginForm from "./components/LoginForm";
 import Notification from "./components/Notification";
-import { useDispatch, useSelector } from "react-redux";
-import { initializeBlogs } from "./reducers/blogReducer";
-import { initialiseUser } from "./reducers/loginReducer";
+import Blog from "./components/routes/Blog";
+import Blogs from "./components/routes/Blogs";
+import User from "./components/routes/User";
+import Users from "./components/routes/Users";
 
 const App = () => {
   const dispatch = useDispatch();
 
   const user = useSelector(({ user }) => user);
+  const users = useSelector(({ users }) => users);
+  const blogs = useSelector(({ blogs }) => blogs);
 
   const blogFormRef = useRef();
 
@@ -25,6 +32,15 @@ const App = () => {
     dispatch(initialiseUser());
   }, []);
 
+  const blogById = (id) => blogs.find((b) => b.id === id);
+  const userById = (id) => users.find((u) => u.id === id);
+
+  const blogMatch = useMatch("/blogs/:id");
+  const matchedBlog = blogMatch ? blogById(blogMatch.params.id) : null;
+
+  const userMatch = useMatch("/users/:id");
+  const matchedUser = userMatch ? userById(userMatch.params.id) : null;
+
   return (
     <>
       <Notification />
@@ -35,8 +51,13 @@ const App = () => {
         <>
           <h2>Blog list application</h2>
           <LoggedUser />
-          <BlogForm blogFormRef={blogFormRef} />
-          <BlogList />
+
+          <Routes>
+            <Route path="/" element={<Blogs blogFormRef={blogFormRef} />} />
+            <Route path="/blogs/:id" element={<Blog blog={matchedBlog} />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/:id" element={<User user={matchedUser} />} />
+          </Routes>
         </>
       )}
     </>

@@ -58,7 +58,7 @@ export const likeBlog = (blog) => {
 };
 
 export const clearBlogs = () => {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch(setBlogs([]));
   };
 };

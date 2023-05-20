@@ -26,14 +26,14 @@ export const initialiseUser = () => {
 };
 
 export const setUser = (user) => {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch(setUserState(user));
   };
 };
 
-export const clearUser = (user) => {
-  return async (dispatch) => {
-    dispatch(clearUserState(user));
+export const clearUser = () => {
+  return (dispatch) => {
+    dispatch(clearUserState());
   };
 };
 

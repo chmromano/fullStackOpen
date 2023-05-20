@@ -21,6 +21,12 @@ export const initializeUsers = () => {
   };
 };
 
+export const clearUsers = () => {
+  return (dispatch) => {
+    dispatch(clearUsersState());
+  };
+};
+
 export const { setUsersState, clearUsersState } = userSlice.actions;
 
 export default userSlice.reducer;

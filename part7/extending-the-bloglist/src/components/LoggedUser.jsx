@@ -1,8 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { setNotification } from "../reducers/notificationReducer";
-import { setUser } from "../reducers/loginReducer";
+import { clearUser } from "../reducers/loginReducer";
 import { clearBlogs } from "../reducers/blogReducer";
+import { clearUsers } from "../reducers/userReducer";
+
 import blogService from "../services/blogs";
 
 const LoggedUser = () => {
@@ -13,7 +16,8 @@ const LoggedUser = () => {
   const handleLogout = async () => {
     window.localStorage.removeItem("loggedBlogAppUser");
     blogService.setToken(null);
-    dispatch(setUser(null));
+    dispatch(clearUser());
+    dispatch(clearUsers());
     dispatch(clearBlogs());
     dispatch(
       setNotification({ error: false, text: "Successfully logged out" }, 5000)
@@ -25,9 +29,7 @@ const LoggedUser = () => {
       <p>
         Logged in as {user.username}
         <br />
-        <button id="logoutButton" onClick={handleLogout}>
-          Logout
-        </button>
+        <button onClick={handleLogout}>Logout</button>
       </p>
     </>
   );

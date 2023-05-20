@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { initializeUsers } from "../reducers/userReducer";
+import { Link } from "react-router-dom";
+
+import { initializeUsers } from "../../reducers/userReducer";
 
 const UserRow = ({ user }) => {
   return (
     <tr>
-      <td>{user.username}</td>
+      <td>
+        <Link to={`/users/${user.id}`}>{user.username}</Link>
+      </td>
       <td>{user.blogs.length}</td>
     </tr>
   );
@@ -16,11 +20,9 @@ const Users = () => {
 
   const users = useSelector(({ users }) => users);
 
-  console.log(users);
-
   useEffect(() => {
     dispatch(initializeUsers());
-  }, [dispatch]);
+  }, [dispatch, users]);
 
   return (
     <>

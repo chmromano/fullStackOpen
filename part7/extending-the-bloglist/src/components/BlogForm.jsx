@@ -61,6 +61,7 @@ const BlogForm = ({ blogFormRef }) => {
   return (
     <Togglable label="Add blog" ref={blogFormRef}>
       <h2>Create new blog</h2>
+
       <form onSubmit={handleCreateBlog}>
         Title:
         <br />
