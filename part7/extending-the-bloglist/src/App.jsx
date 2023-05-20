@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { initializeBlogs } from "./reducers/blogReducer";
 import { initialiseUser } from "./reducers/loginReducer";
 
-import LoggedUser from "./components/LoggedUser";
+import Menu from "./components/Menu";
 import LoginForm from "./components/LoginForm";
 import Notification from "./components/Notification";
 import Blog from "./components/routes/Blog";
@@ -49,8 +49,9 @@ const App = () => {
         <LoginForm />
       ) : (
         <>
+          <Menu />
+
           <h2>Blog list application</h2>
-          <LoggedUser />
 
           <Routes>
             <Route path="/" element={<Blogs blogFormRef={blogFormRef} />} />

@@ -24,13 +24,16 @@ const LoggedUser = () => {
     );
   };
 
+  const margin = {
+    marginLeft: 20,
+  };
+
   return (
     <>
-      <p>
-        Logged in as {user.username}
-        <br />
-        <button onClick={handleLogout}>Logout</button>
-      </p>
+      Logged in as {user.username}
+      <button style={margin} onClick={handleLogout}>
+        Logout
+      </button>
     </>
   );
 };
