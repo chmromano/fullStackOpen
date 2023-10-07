@@ -58,7 +58,7 @@
 
 ### Part 8
 
-- [ ] GraphQL-server
+- [x] GraphQL-server
 - [ ] React and GraphQL
 - [ ] Database and user administration
 - [ ] Login and updating the cache
