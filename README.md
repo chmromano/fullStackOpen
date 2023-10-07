@@ -20,9 +20,7 @@
 - [x] phonebook
 - [x] data for countries
 
-### Part 3 (submodule, [separate repository](https://github.com/chmromano/fullStackOpen-Part3))
-
-#### Link to fly.io deployment: <https://floral-tree-1449.fly.dev>
+### Part 3 ([submodule](https://github.com/chmromano/fullStackOpen-Part3))
 
 - [x] phonebook backend
 - [x] phonebook database
@@ -57,3 +55,11 @@
 - [x] ultimate hooks
 - [x] automatic code formatting
 - [x] extending the bloglist
+
+### Part 8
+
+- [ ] GraphQL-server
+- [ ] React and GraphQL
+- [ ] Database and user administration
+- [ ] Login and updating the cache
+- [ ] Fragments and subscriptions
