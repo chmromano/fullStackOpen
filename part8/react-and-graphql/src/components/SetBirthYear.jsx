@@ -7,18 +7,21 @@ import useField from "../hooks/useField";
 import { EDIT_AUTHOR } from "../graphql/mutations";
 import { ALL_AUTHORS } from "../graphql/queries";
 
-const SetBirthYear = ({ authors }) => {
+const SetBirthYear = ({ authors, setError }) => {
   const { reset: resetBorn, ...born } = useField("number");
 
   const [selectedOption, setSelectedOption] = useState(null);
 
   const [editAuthor] = useMutation(EDIT_AUTHOR, {
     refetchQueries: [{ query: ALL_AUTHORS }],
+    onError: (error) => {
+      const messages = error.graphQLErrors.map((e) => e.message).join("\n");
+      setError(messages);
+    },
   });
 
   const submit = async (event) => {
     event.preventDefault();
-    console.log(selectedOption);
 
     editAuthor({
       variables: {

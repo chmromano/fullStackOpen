@@ -6,7 +6,7 @@ import useField from "../hooks/useField";
 import { ADD_BOOK } from "../graphql/mutations";
 import { ALL_AUTHORS, ALL_BOOKS } from "../graphql/queries";
 
-const NewBook = () => {
+const NewBook = ({ setError }) => {
   const { reset: resetTitle, ...title } = useField("text");
   const { reset: resetAuthor, ...author } = useField("text");
   const { reset: resetPublished, ...published } = useField("number");
@@ -16,6 +16,10 @@ const NewBook = () => {
 
   const [addBook] = useMutation(ADD_BOOK, {
     refetchQueries: [{ query: ALL_AUTHORS }, { query: ALL_BOOKS }],
+    onError: (error) => {
+      const messages = error.graphQLErrors.map((e) => e.message).join("\n");
+      setError(messages);
+    },
   });
 
   const resetForm = () => {

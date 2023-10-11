@@ -59,7 +59,7 @@
 ### Part 8
 
 - [x] GraphQL-server
-- [ ] React and GraphQL
-- [ ] Database and user administration
+- [x] React and GraphQL
+- [x] Database and user administration
 - [ ] Login and updating the cache
 - [ ] Fragments and subscriptions
