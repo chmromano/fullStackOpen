@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Menu = () => {
+const Menu = ({ logout, token }) => {
   const padding = {
     paddingRight: 20,
   };
@@ -14,9 +14,23 @@ const Menu = () => {
       <Link style={padding} to="/books">
         Books
       </Link>
-      <Link style={padding} to="/newbook">
-        New book
-      </Link>
+      {token ? (
+        <>
+          <Link style={padding} to="/newbook">
+            New book
+          </Link>
+          <Link style={padding} to="/recommended">
+            Recommended
+          </Link>
+          <button style={padding} onClick={logout}>
+            Logout
+          </button>
+        </>
+      ) : (
+        <Link style={padding} to="/login">
+          Login
+        </Link>
+      )}
     </div>
   );
 };

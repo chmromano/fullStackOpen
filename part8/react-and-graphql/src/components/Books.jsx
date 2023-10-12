@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 
 import { ALL_BOOKS } from "../graphql/queries";
 
 const Books = () => {
-  const result = useQuery(ALL_BOOKS);
+  const [selectedGenre, setSelectedGenre] = useState(null);
+
+  const result = useQuery(ALL_BOOKS, {
+    variables: { genre: selectedGenre },
+  });
 
   if (result.loading) {
     return <>Loading books...</>;
   }
 
   const books = result.data.allBooks;
+
+  const genres = [...new Set(books.flatMap((book) => book.genres))];
 
   return (
     <>
@@ -32,6 +38,12 @@ const Books = () => {
           ))}
         </tbody>
       </table>
+      {genres.map((g) => (
+        <button key={g} onClick={() => setSelectedGenre(g)}>
+          {g}
+        </button>
+      ))}
+      <button onClick={() => setSelectedGenre(null)}>All genres</button>
     </>
   );
 };

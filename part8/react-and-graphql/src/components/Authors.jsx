@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { ALL_AUTHORS } from "../graphql/queries";
 import SetBirthYear from "./SetBirthYear";
 
-const Authors = ({ setError }) => {
+const Authors = ({ setError, token }) => {
   const result = useQuery(ALL_AUTHORS);
 
   if (result.loading) {
@@ -33,7 +33,7 @@ const Authors = ({ setError }) => {
         </tbody>
       </table>
 
-      <SetBirthYear authors={authors} setError={setError} />
+      {token ? <SetBirthYear authors={authors} setError={setError} /> : null}
     </>
   );
 };

@@ -15,10 +15,26 @@ const NewBook = ({ setError }) => {
   const [genres, setGenres] = useState([]);
 
   const [addBook] = useMutation(ADD_BOOK, {
-    refetchQueries: [{ query: ALL_AUTHORS }, { query: ALL_BOOKS }],
+    refetchQueries: [
+      { query: ALL_AUTHORS },
+      { query: ALL_BOOKS },
+      { query: ALL_BOOKS, variables: { genre: null } },
+    ],
     onError: (error) => {
       const messages = error.graphQLErrors.map((e) => e.message).join("\n");
       setError(messages);
+    },
+    update: (cache, response) => {
+      response.data.addBook.genres.forEach((g) => {
+        cache.updateQuery(
+          { query: ALL_BOOKS, variables: { genre: g } },
+          ({ allBooks }) => {
+            return {
+              allBooks: allBooks.concat(response.data.addBook),
+            };
+          }
+        );
+      });
     },
   });
 

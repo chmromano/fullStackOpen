@@ -75,6 +75,9 @@ const initialiseDatabase = async () => {
   await Book.deleteMany();
   await User.deleteMany();
 
+  const newUser = new User({ username: "mike", favoriteGenre: "patterns" });
+  await newUser.save();
+
   authors.forEach(async (a) => {
     const newAuthor = new Author(a);
     await newAuthor.save();
