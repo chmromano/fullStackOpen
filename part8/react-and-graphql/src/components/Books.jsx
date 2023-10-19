@@ -6,9 +6,12 @@ import { ALL_BOOKS } from "../graphql/queries";
 const Books = () => {
   const [selectedGenre, setSelectedGenre] = useState(null);
 
-  const result = useQuery(ALL_BOOKS, {
-    variables: { genre: selectedGenre },
-  });
+  const result =
+    selectedGenre === null
+      ? useQuery(ALL_BOOKS)
+      : useQuery(ALL_BOOKS, {
+          variables: { genre: selectedGenre },
+        });
 
   if (result.loading) {
     return <>Loading books...</>;

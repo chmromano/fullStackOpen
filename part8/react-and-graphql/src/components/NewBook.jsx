@@ -15,24 +15,33 @@ const NewBook = ({ setError }) => {
   const [genres, setGenres] = useState([]);
 
   const [addBook] = useMutation(ADD_BOOK, {
-    refetchQueries: [
-      { query: ALL_AUTHORS },
-      { query: ALL_BOOKS },
-      { query: ALL_BOOKS, variables: { genre: null } },
-    ],
     onError: (error) => {
       const messages = error.graphQLErrors.map((e) => e.message).join("\n");
       setError(messages);
     },
     update: (cache, response) => {
-      response.data.addBook.genres.forEach((g) => {
-        cache.updateQuery(
-          { query: ALL_BOOKS, variables: { genre: g } },
-          ({ allBooks }) => {
-            return {
-              allBooks: allBooks.concat(response.data.addBook),
-            };
+      const newBook = response.data.addBook;
+
+      const updateCacheForQuery = (query, key, newValue) => {
+        cache.updateQuery(query, (data) => {
+          console.log("From NewBook.jsx", key, data);
+
+          if (data === null || data[key].some((k) => k.id === newValue.id)) {
+            return data;
           }
+
+          return { ...data, [key]: data[key].concat(newValue) };
+        });
+      };
+
+      updateCacheForQuery({ query: ALL_BOOKS }, "allBooks", newBook);
+      updateCacheForQuery({ query: ALL_AUTHORS }, "allAuthors", newBook.author);
+
+      newBook.genres.forEach((g) => {
+        updateCacheForQuery(
+          { query: ALL_BOOKS, variables: { genre: g } },
+          "allBooks",
+          newBook
         );
       });
     },
