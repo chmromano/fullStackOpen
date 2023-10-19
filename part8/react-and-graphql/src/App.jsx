@@ -10,8 +10,8 @@ import Menu from "./components/Menu";
 import LoginForm from "./components/LoginForm";
 import Recommended from "./components/Recommended";
 
+import { updateCacheOnNewBook } from "./graphql/updateCache";
 import { BOOK_ADDED } from "./graphql/subscriptions";
-import { ALL_AUTHORS, ALL_BOOKS } from "./graphql/queries";
 
 const App = () => {
   const [token, setToken] = useState(null);
@@ -43,30 +43,8 @@ const App = () => {
   useSubscription(BOOK_ADDED, {
     onData: ({ data }) => {
       const newBook = data.data.bookAdded;
-      notify(`${newBook.title} added`);
-
-      const updateCacheForQuery = (query, key, newValue) => {
-        apolloClient.cache.updateQuery(query, (data) => {
-          console.log("From App.jsx", data);
-
-          if (data === null || data[key].some((k) => k.id === newValue.id)) {
-            return data;
-          }
-
-          return { ...data, [key]: data[key].concat(newValue) };
-        });
-      };
-
-      updateCacheForQuery({ query: ALL_BOOKS }, "allBooks", newBook);
-      updateCacheForQuery({ query: ALL_AUTHORS }, "allAuthors", newBook.author);
-
-      newBook.genres.forEach((g) => {
-        updateCacheForQuery(
-          { query: ALL_BOOKS, variables: { genre: g } },
-          "allBooks",
-          newBook
-        );
-      });
+      window.alert(`${newBook.title} added`);
+      updateCacheOnNewBook(apolloClient.cache, newBook);
     },
   });
 

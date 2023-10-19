@@ -3,8 +3,8 @@ import { useMutation } from "@apollo/client";
 
 import useField from "../hooks/useField";
 
+import { updateCacheOnNewBook } from "../graphql/updateCache";
 import { ADD_BOOK } from "../graphql/mutations";
-import { ALL_AUTHORS, ALL_BOOKS } from "../graphql/queries";
 
 const NewBook = ({ setError }) => {
   const { reset: resetTitle, ...title } = useField("text");
@@ -21,29 +21,7 @@ const NewBook = ({ setError }) => {
     },
     update: (cache, response) => {
       const newBook = response.data.addBook;
-
-      const updateCacheForQuery = (query, key, newValue) => {
-        cache.updateQuery(query, (data) => {
-          console.log("From NewBook.jsx", key, data);
-
-          if (data === null || data[key].some((k) => k.id === newValue.id)) {
-            return data;
-          }
-
-          return { ...data, [key]: data[key].concat(newValue) };
-        });
-      };
-
-      updateCacheForQuery({ query: ALL_BOOKS }, "allBooks", newBook);
-      updateCacheForQuery({ query: ALL_AUTHORS }, "allAuthors", newBook.author);
-
-      newBook.genres.forEach((g) => {
-        updateCacheForQuery(
-          { query: ALL_BOOKS, variables: { genre: g } },
-          "allBooks",
-          newBook
-        );
-      });
+      updateCacheOnNewBook(cache, newBook);
     },
   });
 
