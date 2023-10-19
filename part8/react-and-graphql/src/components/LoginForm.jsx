@@ -22,7 +22,7 @@ const LoginForm = ({ setError, setToken }) => {
     if (result.data) {
       const token = result.data.login.value;
       setToken(token);
-      localStorage.setItem("phonenumbers-user-token", token);
+      localStorage.setItem("books-user-token", token);
       navigate("/authors");
     }
   }, [result.data]);

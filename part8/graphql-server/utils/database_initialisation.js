@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-import Author from "./models/author.js";
-import Book from "./models/book.js";
-import User from "./models/user.js";
+import Author from "../models/author.js";
+import Book from "../models/book.js";
+import User from "../models/user.js";
 
 export const authors = [
   {
@@ -75,8 +75,10 @@ const initialiseDatabase = async () => {
   await Book.deleteMany();
   await User.deleteMany();
 
-  const newUser = new User({ username: "mike", favoriteGenre: "patterns" });
-  await newUser.save();
+  const newUser1 = new User({ username: "mike", favoriteGenre: "patterns" });
+  const newUser2 = new User({ username: "john", favoriteGenre: "patterns" });
+  await newUser1.save();
+  await newUser2.save();
 
   authors.forEach(async (a) => {
     const newAuthor = new Author(a);

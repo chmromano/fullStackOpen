@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient, useSubscription } from "@apollo/client";
 
 import Notify from "./components/Notify";
 import Authors from "./components/Authors";
@@ -10,6 +10,8 @@ import Menu from "./components/Menu";
 import LoginForm from "./components/LoginForm";
 import Recommended from "./components/Recommended";
 
+import { BOOK_ADDED } from "./graphql/subscriptions";
+
 const App = () => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,12 +19,19 @@ const App = () => {
   const apolloClient = useApolloClient();
 
   useEffect(() => {
-    const savedToken = localStorage.getItem("phonenumbers-user-token");
+    const savedToken = localStorage.getItem("books-user-token");
     if (savedToken) {
       setToken(savedToken);
     }
     setLoading(false);
   }, []);
+
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data }) => {
+      const addedBook = data.data.bookAdded;
+      window.alert(`${addedBook.title} added`);
+    },
+  });
 
   const notify = (message) => {
     setErrorMessage(message);
