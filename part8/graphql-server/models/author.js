@@ -11,6 +11,12 @@ const schema = new Schema({
   born: {
     type: Number,
   },
+  books: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Book",
+    },
+  ],
 });
 
 schema.plugin(uniqueValidator);

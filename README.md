@@ -61,5 +61,5 @@
 - [x] GraphQL-server
 - [x] React and GraphQL
 - [x] Database and user administration
-- [ ] Login and updating the cache
-- [ ] Fragments and subscriptions
+- [x] Login and updating the cache
+- [x] Fragments and subscriptions

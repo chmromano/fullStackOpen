@@ -2,10 +2,11 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 
 import { ALL_AUTHORS } from "../graphql/queries";
+
 import SetBirthYear from "./SetBirthYear";
 
 const Authors = ({ setError, token }) => {
-  const result = useQuery(ALL_AUTHORS);
+  const result = useQuery(ALL_AUTHORS, { fetchPolicy: "network-only" });
 
   if (result.loading) {
     return <>Loading authors...</>;

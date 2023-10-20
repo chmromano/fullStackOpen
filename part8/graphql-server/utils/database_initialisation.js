@@ -80,20 +80,24 @@ const initialiseDatabase = async () => {
   await newUser1.save();
   await newUser2.save();
 
-  authors.forEach(async (a) => {
+  for (let a of authors) {
     const newAuthor = new Author(a);
-    await newAuthor.save();
 
-    books
-      .filter((b) => a.name === b.author.name)
-      .forEach(async (b) => {
-        const newBook = new Book({
-          ...b,
-          author: new mongoose.Types.ObjectId(newAuthor._id),
-        });
-        await newBook.save();
+    const filteredBooks = books.filter((b) => a.name === b.author.name);
+
+    for (let b of filteredBooks) {
+      const newBook = new Book({
+        ...b,
+        author: new mongoose.Types.ObjectId(newAuthor._id),
       });
-  });
+
+      newAuthor.books.push(new mongoose.Types.ObjectId(newBook._id));
+
+      await newBook.save();
+    }
+
+    await newAuthor.save();
+  }
 };
 
 export default initialiseDatabase;
