@@ -1,6 +1,6 @@
 import { argsToNumber } from "./utils";
 
-interface exerciseResults {
+export interface exerciseResults {
   periodLength: number;
   trainingDays: number;
   success: boolean;
@@ -25,7 +25,7 @@ const calculateRating = (average: number, target: number): [number, string] => {
   return [rating, ratingDescription];
 };
 
-const calculateExercises = (parameters: number[]): exerciseResults => {
+export const calculateExercises = (parameters: number[]): exerciseResults => {
   if (parameters.length < 3) {
     throw new Error("Not enough days to calculate a result!");
   }

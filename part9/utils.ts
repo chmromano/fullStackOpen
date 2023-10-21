@@ -19,3 +19,19 @@ export const argsToNumber = (args: string[], numArgs: number): number[] => {
 
   return parsedArgs;
 };
+
+export const onlyNumbers = (array: number[]): boolean => {
+  return array.every((n) => {
+    return typeof n === "number";
+  });
+};
+
+export const onlyLooselyPositiveNumbers = (array: number[]): boolean => {
+  return array.every((n) => {
+    return typeof n === "number" && n >= 0;
+  });
+};
+
+export const looselyPositiveNumber = (value: number): boolean => {
+  return typeof value === "number" && value >= 0;
+};
