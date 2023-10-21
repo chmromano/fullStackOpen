@@ -1,6 +1,6 @@
 import { argsToNumber } from "./utils";
 
-const calculateBmi = (height: number, weight: number): string => {
+export const calculateBmi = (height: number, weight: number): string => {
   if (height <= 0) {
     throw new Error("Height must be larger than 0!");
   }
@@ -25,9 +25,9 @@ const calculateBmi = (height: number, weight: number): string => {
     return "Obese (Class I)";
   } else if (bmi < 40) {
     return "Obese (Class II)";
-  } else if (bmi >= 40) {
-    return "Obese (Class III)";
   }
+
+  return "Obese (Class III)";
 };
 
 try {
