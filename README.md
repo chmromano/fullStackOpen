@@ -63,3 +63,10 @@
 - [x] Database and user administration
 - [x] Login and updating the cache
 - [x] Fragments and subscriptions
+
+### Part 9
+
+- [ ] First steps with TypeScript
+- [ ] Typing an Express app
+- [ ] React with types
+- [ ] Grande finale: Patientor
