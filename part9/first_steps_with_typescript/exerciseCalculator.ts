@@ -1,4 +1,4 @@
-import { argsToNumber } from "./utils";
+// import { argsToNumber } from "./utils";
 
 export interface exerciseResults {
   periodLength: number;
@@ -74,7 +74,10 @@ export const calculateExercises = (parameters: number[]): exerciseResults => {
   return results;
 };
 
-try {
+// This was the CLI part of the code
+
+/*
+  try {
   console.log(
     calculateExercises(argsToNumber(process.argv, process.argv.length - 2))
   );
@@ -85,3 +88,4 @@ try {
   }
   console.log(errorMessage);
 }
+*/

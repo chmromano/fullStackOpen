@@ -1,4 +1,4 @@
-import { argsToNumber } from "./utils";
+// import { argsToNumber } from "./utils";
 
 export const calculateBmi = (height: number, weight: number): string => {
   if (height <= 0) {
@@ -30,6 +30,9 @@ export const calculateBmi = (height: number, weight: number): string => {
   return "Obese (Class III)";
 };
 
+// This was the CLI part of the code
+
+/*
 try {
   const parsedArgs: number[] = argsToNumber(process.argv, 2);
   const height: number = parsedArgs[0];
@@ -43,3 +46,4 @@ try {
   }
   console.log(errorMessage);
 }
+*/

@@ -1,3 +1,6 @@
+// This is disabled because it is only used in the (deprecated) CLI part of the code
+
+/*
 export const argsToNumber = (args: string[], numArgs: number): number[] => {
   if (args.length < numArgs + 2) {
     throw new Error("Not enough arguments");
@@ -19,6 +22,7 @@ export const argsToNumber = (args: string[], numArgs: number): number[] => {
 
   return parsedArgs;
 };
+*/
 
 export const onlyNumbers = (array: number[]): boolean => {
   return array.every((n) => {
