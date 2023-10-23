@@ -6,6 +6,7 @@ import { DiaryEntry, Visibility, Weather } from "../types";
 
 import Notify from "./Notify";
 import axios from "axios";
+import RadioGroup from "./RadioGroup";
 
 interface NewEntryProps {
   newDiaryHandler: (entry: DiaryEntry) => void;
@@ -14,17 +15,10 @@ interface NewEntryProps {
 const NewEntry = ({ newDiaryHandler }: NewEntryProps) => {
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { reset: resetDate, ...date } = useField("text");
-  const { reset: resetVisibility, ...visibility } = useField("text");
-  const { reset: resetWeather, ...weather } = useField("text");
+  const { reset: resetDate, ...date } = useField("date");
   const { reset: resetComment, ...comment } = useField("text");
-
-  const resetForm = () => {
-    resetDate();
-    resetVisibility();
-    resetWeather();
-    resetComment();
-  };
+  const [weather, setWeather] = useState<Weather>();
+  const [visibility, setVisibility] = useState<Visibility>();
 
   const notify = (message: string) => {
     setErrorMessage(message);
@@ -39,12 +33,15 @@ const NewEntry = ({ newDiaryHandler }: NewEntryProps) => {
     try {
       const newDiaryEntry = await createDiaryEntry({
         date: date.value,
-        visibility: visibility.value as Visibility,
-        weather: weather.value as Weather,
+        visibility: visibility as Visibility,
+        weather: weather as Weather,
         comment: comment.value,
       });
+
       newDiaryHandler(newDiaryEntry);
-      resetForm();
+
+      resetDate();
+      resetComment();
     } catch (error: unknown) {
       let errorMessage = "Something bad happened.";
 
@@ -56,6 +53,14 @@ const NewEntry = ({ newDiaryHandler }: NewEntryProps) => {
     }
   };
 
+  const handleWeather = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setWeather(event.target.value as Weather);
+  };
+
+  const handleVisibility = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setVisibility(event.target.value as Visibility);
+  };
+
   return (
     <>
       <h1>Add new entry</h1>
@@ -65,10 +70,17 @@ const NewEntry = ({ newDiaryHandler }: NewEntryProps) => {
         <input id="date" {...date} />
         <br />
         <label htmlFor="visibility">visibility</label>
-        <input id="visibility" {...visibility} />
+        <RadioGroup
+          name={"visibility"}
+          values={["great", "good", "ok", "poor"]}
+          handler={handleVisibility}
+        />
         <br />
-        <label htmlFor="weather">weather</label>
-        <input id="weather" {...weather} />
+        <RadioGroup
+          name={"weather"}
+          values={["sunny", "rainy", "cloudy", "stormy", "windy"]}
+          handler={handleWeather}
+        />
         <br />
         <label htmlFor="comment">comment</label>
         <input id="comment" {...comment} />
