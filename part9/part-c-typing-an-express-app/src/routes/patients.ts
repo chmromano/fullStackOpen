@@ -9,6 +9,16 @@ router.get("/", (_request, response): void => {
   response.send(patientService.getNonSensitivePatients());
 });
 
+router.get("/:id", (request, response) => {
+  const patient = patientService.findById(String(request.params.id));
+
+  if (patient) {
+    response.send(patient);
+  } else {
+    response.sendStatus(404);
+  }
+});
+
 router.post("/", (request, response): void => {
   try {
     const newPatient = toNewPatient(request.body);
