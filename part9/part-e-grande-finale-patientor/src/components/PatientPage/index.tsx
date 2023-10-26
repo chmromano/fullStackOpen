@@ -7,6 +7,7 @@ import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import { Patient } from "../../types";
 
 import patientService from "../../services/patients";
+import EntriesList from "./EntriesList";
 
 interface PatientPageProps {
   id: string;
@@ -57,6 +58,7 @@ const PatientPage = ({ id }: PatientPageProps) => {
         <br />
         occupation: {patient.occupation}
       </p>
+      <EntriesList entries={patient.entries} />
     </>
   );
 };
