@@ -1,4 +1,4 @@
-import { Diagnosis } from "../../types";
+import { Diagnosis } from "../../../types";
 
 interface DiagnosisListItemProps {
   code: string;

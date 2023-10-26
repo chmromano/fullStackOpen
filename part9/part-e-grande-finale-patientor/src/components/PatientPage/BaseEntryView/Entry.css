@@ -1,0 +1,8 @@
+.Entry {
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  padding: 8px;
+}

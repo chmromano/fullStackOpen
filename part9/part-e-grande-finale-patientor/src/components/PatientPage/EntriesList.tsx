@@ -3,7 +3,7 @@ import { Entry, Diagnosis } from "../../types";
 
 import diagnosisService from "../../services/diagnoses";
 
-import SingleEntry from "./SingleEntry";
+import BaseEntryView from "./BaseEntryView";
 
 interface EntriesListProps {
   entries: Entry[];
@@ -23,11 +23,9 @@ const EntriesList = ({ entries }: EntriesListProps) => {
   return (
     <>
       <h2>Entries</h2>
-      <ul>
-        {entries.map((e: Entry) => (
-          <SingleEntry key={e.id} entry={e} diagnoses={diagnoses} />
-        ))}
-      </ul>
+      {entries.map((e: Entry) => (
+        <BaseEntryView key={e.id} entry={e} diagnoses={diagnoses} />
+      ))}
     </>
   );
 };
