@@ -1,10 +1,13 @@
-import { Entry } from "../../types";
+import { Diagnosis, Entry } from "../../types";
+
+import DiagnosisListItem from "./DiagnosisListItem";
 
 interface SingleEntryProps {
   entry: Entry;
+  diagnoses: Diagnosis[];
 }
 
-const SingleEntry = ({ entry }: SingleEntryProps) => (
+const SingleEntry = ({ entry, diagnoses }: SingleEntryProps) => (
   <li>
     <p>
       {entry.date} {entry.description}
@@ -13,7 +16,7 @@ const SingleEntry = ({ entry }: SingleEntryProps) => (
       {!entry.diagnosisCodes
         ? null
         : entry.diagnosisCodes.map((code: string) => (
-            <li key={code}>{code}</li>
+            <DiagnosisListItem key={code} code={code} diagnoses={diagnoses} />
           ))}
     </ul>
   </li>
