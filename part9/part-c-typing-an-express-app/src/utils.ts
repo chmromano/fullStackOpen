@@ -129,10 +129,16 @@ const isSickLeave = (param: unknown): param is SickLeave => {
 const parseSickLeave = (sickLeave: unknown): SickLeave => {
   if (
     !isSickLeave(sickLeave) ||
+    typeof sickLeave !== "object" ||
+    sickLeave === null ||
+    !("startDate" in sickLeave) ||
+    !("endDate" in sickLeave) ||
     !isDate(sickLeave.startDate) ||
     !isDate(sickLeave.endDate)
   ) {
-    throw new Error("Incorrect or missing sick leave: " + sickLeave);
+    throw new Error(
+      "Incorrect or missing sick leave: " + JSON.stringify(sickLeave)
+    );
   }
 
   return sickLeave;
@@ -150,10 +156,17 @@ const isDischarge = (param: unknown): param is Discharge => {
 const parseDischarge = (discharge: unknown): Discharge => {
   if (
     !isDischarge(discharge) ||
+    typeof discharge !== "object" ||
+    discharge === null ||
+    !("criteria" in discharge) ||
+    !("date" in discharge) ||
     !isDate(discharge.date) ||
-    !isString(discharge.criteria)
+    !isString(discharge.criteria) ||
+    discharge.criteria.trim().length === 0
   ) {
-    throw new Error("Incorrect or missing discharge: " + discharge);
+    throw new Error(
+      "Incorrect or missing discharge: " + JSON.stringify(discharge)
+    );
   }
 
   return discharge;
@@ -179,9 +192,7 @@ const toNewHealthCheckEntry = (object: unknown): NewEntry => {
     };
 
     if ("diagnosisCodes" in object) {
-      newHealthCheckEntry.diagnosisCodes = parseDiagnosisCodes(
-        object.diagnosisCodes
-      );
+      newHealthCheckEntry.diagnosisCodes = parseDiagnosisCodes(object);
     }
 
     return newHealthCheckEntry;
@@ -216,9 +227,8 @@ const toNewOccupationalHealthcareEntry = (object: unknown): NewEntry => {
     }
 
     if ("diagnosisCodes" in object) {
-      newOccupationalHealthcareEntry.diagnosisCodes = parseDiagnosisCodes(
-        object.diagnosisCodes
-      );
+      newOccupationalHealthcareEntry.diagnosisCodes =
+        parseDiagnosisCodes(object);
     }
 
     return newOccupationalHealthcareEntry;
@@ -245,9 +255,7 @@ const toNewHospitalEntry = (object: unknown): NewEntry => {
     }
 
     if ("diagnosisCodes" in object) {
-      newHospitalEntry.diagnosisCodes = parseDiagnosisCodes(
-        object.diagnosisCodes
-      );
+      newHospitalEntry.diagnosisCodes = parseDiagnosisCodes(object);
     }
 
     return newHospitalEntry;
@@ -267,7 +275,7 @@ export const toNewEntry = (object: unknown): NewEntry => {
         return toNewHealthCheckEntry(object);
       case "Hospital":
         return toNewHospitalEntry(object);
-      case "OccupationalHealthCase":
+      case "OccupationalHealthcare":
         return toNewOccupationalHealthcareEntry(object);
       default:
         throw new Error("Incorrect data: invalid type");
